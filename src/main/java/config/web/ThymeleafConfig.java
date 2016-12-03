@@ -30,11 +30,12 @@ public class ThymeleafConfig implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
     
-    @Bean("templateResolver")
-    private ITemplateResolver provideTemplateResolver() {
+    @Bean(name="templateResolver")
+    public ITemplateResolver provideTemplateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/templates/");
+        resolver.setSuffix(".html");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
