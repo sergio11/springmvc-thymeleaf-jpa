@@ -29,8 +29,8 @@ public class VendorAdapterConfig {
     public JpaVendorAdapter provideJpaVendorAdapterDev() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setDatabase(Database.DERBY);
-        adapter.setShowSql(true);
-        adapter.setGenerateDdl(false);
+        adapter.setShowSql(env.getProperty("hibernate.dev.show_sql", Boolean.class));
+        adapter.setGenerateDdl(env.getProperty("hibernate.dev.hbm2ddl.auto", Boolean.class));
         adapter.setDatabasePlatform(env.getProperty("hibernate.dev.dialect"));
         return adapter;
     }
