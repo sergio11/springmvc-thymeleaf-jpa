@@ -1,0 +1,28 @@
+package config.persistence;
+
+import javax.sql.DataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
+
+@Configuration
+@Import(value = { DataSourceConfig.class, VendorAdapterConfig.class })
+@EnableJpaRepositories(basePackages = "repositories")
+public class PersistenceConfig {
+
+    private static final String PACKAGE_TO_SCAN_MODELS = "models";
+    
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean provideEntityManagerFactory(
+            DataSource datasource, JpaVendorAdapter jpaVendorAdapter) {
+        LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
+        emfb.setDataSource(datasource);
+        emfb.setJpaVendorAdapter(jpaVendorAdapter);
+        emfb.setPackagesToScan(PACKAGE_TO_SCAN_MODELS);
+        return emfb;
+    }
+}
