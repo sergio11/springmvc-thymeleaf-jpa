@@ -4,8 +4,45 @@
         <title>Blog</title>
     </head>
     <body>
-        <div layout:fragment="content">
-            <h1>Welcome to Spring MVC</h1>
+        <div layout:fragment="header">
+            <header class="intro-header" style="background-image: url('img/home-bg.jpg')">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                            <div class="site-heading">
+                                <h1 th:text="#{home.title}">Oh My Blog!</h1>
+                                <hr class="small">
+                                <span th:text="#{home.subtitle}" class="subheading">Blog for lovers of web development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
         </div>
-    </body>
+        <div layout:fragment="content">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div th:if="${not #lists.isEmpty(latest5posts)}">
+                        <h2 th:text="${home.post.title}">Last 5 articles published.</h2>
+                        <div th:each="p:${latest5posts}">
+                            <article class="post-preview" >
+                                <a href="post.html">
+                                    <h2 class="post-title" th:text="${p.title}">Post Title</h2>
+                                    <h3 class="post-subtitle" th:text="${p.subtitle}">Post Subtitle</h3>
+                                </a>
+                                <p class="post-meta">
+                                    <span th:if="${p.author}" th:remove="tag">
+                                        Posted by <span th:text="${p.author.fullName != null ? p.author.fullName : p.author.username}">---</span>
+                                    </span>
+                                    <span th:text="${#dates.format(p.date, 'dd-MMM-yyyy')}">---</span>
+                                </p>
+                            </article>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

@@ -25,6 +25,9 @@ public class Post implements Serializable {
 
     @Column(nullable = false, length = 300)
     private String title;
+    
+    @Column(nullable = false, length = 300)
+    private String subtitle;
 
     @Lob
     @Column(nullable = false)
@@ -64,6 +67,14 @@ public class Post implements Serializable {
         this.title = title;
     }
 
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+    
     public String getBody() {
         return body;
     }
@@ -90,7 +101,7 @@ public class Post implements Serializable {
 
     @Override
     public String toString() {
-        return "Post [id=" + id + ", title=" + title + ", body=" + body + ", date=" + date + "]";
+        return "Post{" + "id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", body=" + body + ", author=" + author + ", date=" + date + '}';
     }
-
+    
 }

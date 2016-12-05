@@ -40,10 +40,10 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="index.html">Home</a>
+                                <a th:href="@{/}" th:text="#{navigation.home}">Home</a>
                             </li>
                             <li>
-                                <a href="about.html">About</a>
+                                <a th:href="@{/about}" th:text="#{navigation.about}">About</a>
                             </li>
                             <li>
                                 <a href="post.html">Sample Post</a>
@@ -59,21 +59,7 @@
             </nav>
         </div>
         <!-- Page Header -->
-        <div>
-            <header th:fragment="site-header" class="intro-header" style="background-image: url('img/home-bg.jpg')">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                            <div class="site-heading">
-                                <h1 th:text="#{home.title}">Oh My Blog!</h1>
-                                <hr class="small">
-                                <span th:text="#{home.subtitle}" class="subheading">Blog for lovers of web development</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header> 
-        </div>
+        <div layout:fragment="header"></div>
         <!-- Main Container -->
         <div class="container">
             <div layout:fragment="content"></div>
