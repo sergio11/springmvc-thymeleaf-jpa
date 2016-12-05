@@ -2,7 +2,6 @@ package models;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +20,8 @@ public class User {
     @Column(nullable = false, length = 30, unique = true)
     private String username;
     @Column(length = 60)
-    private String passwordHash;
+    private String password;
+    private Boolean enabled;
     @Column(length = 100)
     private String fullName;
     @OneToMany(mappedBy = "author")
@@ -31,14 +31,15 @@ public class User {
         super();
     }
 
-    public User(String username, String passwordHash, String fullName, Set<Post> posts) {
-        super();
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.fullName = fullName;
-        this.posts = posts;
+    public User(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.enabled = user.getEnabled();
+        this.fullName = user.getFullName();
+        this.posts = user.getPosts();
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -55,14 +56,22 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+    
     public String getFullName() {
         return fullName;
     }
@@ -81,7 +90,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", fullName=" + fullName
-                + ", posts=" + posts + "]";
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -21,7 +22,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan(value = { "controllers", "services" })
 @Import(value = { ThymeleafConfig.class })
 public class WebConfig extends WebMvcConfigurerAdapter{
-   
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/403").setViewName("403");
+    }
+    
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         // habilitar procesamiento de contenido estático

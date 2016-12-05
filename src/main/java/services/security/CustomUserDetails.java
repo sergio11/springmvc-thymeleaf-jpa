@@ -1,0 +1,56 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package services.security;
+
+import java.util.Collection;
+import java.util.List;
+import models.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
+
+/**
+ *
+ * @author sergio
+ */
+public class CustomUserDetails extends User implements UserDetails {
+    
+    private static final long serialVersionUID = 1L;
+    private List<String> userRoles;
+
+    public CustomUserDetails(User user, List<String> userRoles) {
+        super(user);
+        this.userRoles = userRoles;
+    }
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String roles= StringUtils.collectionToCommaDelimitedString(userRoles);   
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    
+}
