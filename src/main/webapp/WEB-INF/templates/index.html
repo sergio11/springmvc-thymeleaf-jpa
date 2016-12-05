@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html layout:decorator="layout">
     <head>
-        <meta charset="UTF-8" />
         <title>Blog</title>
     </head>
-
     <body>
-        <h1>Welcome to Spring MVC</h1>
-        Now is: <b th:text="${execInfo.now.time}"></b>
-        <div th:if="${#lists.isEmpty(latest5posts)}">
-            <p>No se han encontrado Posts ...</p>
+        <div layout:fragment="content">
+            <h1>Welcome to Spring MVC</h1>
         </div>
     </body>
-
 </html>

@@ -23,7 +23,7 @@ public class HomeController {
     @Autowired
     private PostService postService;
     
-    @RequestMapping("/")
+    @RequestMapping(value = {"/", "/home"})
     public String index(Model model) {
         List<Post> latest5Posts = postService.findLatest5();
         model.addAttribute("latest5posts", latest5Posts);

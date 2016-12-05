@@ -5,6 +5,7 @@
  */
 package config.web;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,7 @@ public class ThymeleafConfig implements ApplicationContextAware {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
         engine.setTemplateResolver(templateResolver);
+        engine.addDialect(new LayoutDialect());
         return engine;
     }
 
