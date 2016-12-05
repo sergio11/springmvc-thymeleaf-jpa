@@ -5,13 +5,16 @@
  */
 package config.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 /**
  *
@@ -20,8 +23,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @ComponentScan(value = { "controllers", "services" })
-@Import(value = { ThymeleafConfig.class })
+@Import(value = { ThymeleafConfig.class, i18nConfig.class })
 public class WebConfig extends WebMvcConfigurerAdapter{
+    
+    @Autowired
+    private LocaleChangeInterceptor localeChangeInterceptor;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -33,4 +39,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         // habilitar procesamiento de contenido estático
        configurer.enable();
     } 
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor);
+    }
 }
