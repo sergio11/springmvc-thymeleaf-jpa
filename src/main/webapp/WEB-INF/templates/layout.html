@@ -45,7 +45,7 @@
                             <li>
                                 <a th:href="@{/about}" th:text="#{navigation.about}">About</a>
                             </li>
-                            <li>
+                            <li sec:authorize="isAuthenticated()">
                                 <a th:href="@{/posts/create}" th:text="#{navigation.create.post}">New Post</a>
                             </li>
                             <li>
