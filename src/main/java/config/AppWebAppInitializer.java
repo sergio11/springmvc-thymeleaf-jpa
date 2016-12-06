@@ -2,8 +2,10 @@ package config;
 
 import config.root.RootConfig;
 import config.web.WebConfig;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 
@@ -25,6 +27,12 @@ public final class AppWebAppInitializer extends AbstractAnnotationConfigDispatch
         return new String[] { "/" };
     }
 
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        super.customizeRegistration(registration);
+        registration.setMultipartConfig(new MultipartConfigElement("/tmp/blog/uploads", 2097152, 4194304, 0));
+    }
+    
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
