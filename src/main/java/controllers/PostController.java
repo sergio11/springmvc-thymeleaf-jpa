@@ -6,14 +6,18 @@
 package controllers;
 
 import exceptions.PostNotFoundException;
+import javax.validation.Valid;
 import models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.PostService;
 
 /**
@@ -27,25 +31,32 @@ public class PostController {
     @Autowired
     private PostService postService;
     
-    @RequestMapping(value="/{postId}", method=GET)
-    public String showPost(@PathVariable("postId") Long postId, Model model){
-        Post post = postService.findById(postId);
-        if(post == null){
-            throw new PostNotFoundException();
+    @GetMapping("/{postId}")
+    public String showPost(@PathVariable Long postId, Model model){
+        if(!model.containsAttribute("post")){
+            Post post = postService.findById(postId);
+            if(post == null){
+                throw new PostNotFoundException();
+            }
+            model.addAttribute("post", post);
         }
-        model.addAttribute("post", post);
         return "post/show";
     }
     
-    @RequestMapping(value="/create", method=GET)
-    public String showCreatePostForm(){
+    @GetMapping("/create")
+    public String showCreatePostForm(Model model){
+        model.addAttribute("post", new Post());
         return "post/create";
     }
     
-    @RequestMapping(value="/create", method=POST)
-    public String processPost(Post post, Model model){
+    @PostMapping("/create")
+    public String processPost(@ModelAttribute @Valid Post post, Errors errors, RedirectAttributes model){
+        if(errors.hasErrors()){
+            return "post/create";
+        }
         postService.create(post);
         model.addAttribute("postId", post.getId());
+        model.addFlashAttribute("post", post);
         return "redirect:/posts/{postId}";
     }
 }

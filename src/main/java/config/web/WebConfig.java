@@ -5,6 +5,7 @@
  */
 package config.web;
 
+import net.rossillo.spring.web.mvc.CacheControlHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -44,5 +45,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor);
+        registry.addInterceptor(new CacheControlHandlerInterceptor());
     }
 }

@@ -7,6 +7,7 @@ package controllers;
 
 import java.util.List;
 import models.Post;
+import net.rossillo.spring.web.mvc.CacheControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ public class HomeController {
     @Autowired
     private PostService postService;
     
+    @CacheControl(maxAge = 300)
     @RequestMapping(value = {"/", "/home"})
     public String index(Model model) {
         List<Post> latest5Posts = postService.findLatest5();

@@ -7,11 +7,11 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
         <!-- Theme CSS -->
-        <link href="css/clean-blog.min.css" rel="stylesheet">
+        <link th:href="@{/css/clean-blog.min.css}" rel="stylesheet">
         <!-- Custom Fonts -->
-        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
         <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -46,7 +46,7 @@
                                 <a th:href="@{/about}" th:text="#{navigation.about}">About</a>
                             </li>
                             <li>
-                                <a href="post.html">Sample Post</a>
+                                <a th:href="@{/posts/create}" th:text="#{navigation.create.post}">New Post</a>
                             </li>
                             <li>
                                 <a href="contact.html">Contact</a>
@@ -100,13 +100,13 @@
                 </div>
             </div>
             <!-- jQuery -->
-            <script src="js/jquery.min.js"></script>
+            <script th:src="@{/js/jquery.min.js}"></script>
 
             <!-- Bootstrap Core JavaScript -->
-            <script src="js/bootstrap.min.js"></script>
+            <script th:src="@{/js/bootstrap.min.js}"></script>
 
             <!-- Theme JavaScript -->
-            <script src="js/clean-blog.min.js"></script>
+            <script th:src="@{/js/clean-blog.min.js}"></script>
         </footer>
     </body>
 </html>

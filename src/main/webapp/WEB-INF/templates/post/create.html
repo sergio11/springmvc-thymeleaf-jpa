@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html layout:decorator="layout">
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <div layout:fragment="header">
+            <header class="intro-header" style="background-image: url('/ejercicio1m/img/about-bg.jpg')">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                                <div class="post-heading">
+                                    <h1>Man must explore, and this is exploration at its greatest</h1>
+                                    <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
+                                    <span class="meta">Posted by <a href="#">Start Bootstrap</a> on August 24, 2014</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </header>
+        </div>
+        <div layout:fragment="content">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <form id="createPost" name="createPost" method="POST" action="#" th:action="@{/posts/create}" th:object="${post}">
+                        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                            <ul>
+                                <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                            </ul>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label th:text="#{form.post.title.label}">Title</label>
+                                <input type="text" th:field="*{title}" th:placeholder="#{form.post.title.placeholder}" class="form-control" id="name" required />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label th:text="#{form.post.subtitle.label}">Subtitle</label>
+                                <input type="text" th:field="*{subtitle}" th:placeholder="#{form.post.subtitle.placeholder}" class="form-control" id="name" required />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-default" th:value="#{form.post.submit}">Create</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

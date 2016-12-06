@@ -23,7 +23,7 @@ public class i18nConfig {
     @Bean(name="messageSource")
     public MessageSource  provideMessageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("/WEB-INF/i18n/messages");
+        messageSource.addBasenames("/WEB-INF/i18n/messages");
         messageSource.setFallbackToSystemLocale(true);
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;

@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "posts")
@@ -22,18 +24,22 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @NotNull(message="{post.title.notnull}")
+    @Size(min=5, max=25, message="{post.title.size}")
     @Column(nullable = false, length = 300)
     private String title;
     
+    @NotNull(message="{post.subtitle.notnull}")
+    @Size(min=5, max=25, message="{post.subtitle.size}")
     @Column(nullable = false, length = 300)
     private String subtitle;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String body;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private User author;
 
     @Column(nullable = false)
