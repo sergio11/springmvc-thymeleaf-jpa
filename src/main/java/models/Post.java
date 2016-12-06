@@ -39,7 +39,8 @@ public class Post implements Serializable {
     @Column(nullable = true)
     private String body;
 
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @NotNull(message="{post.subtitle.notnull}")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User author;
 
     @Column(nullable = false)
