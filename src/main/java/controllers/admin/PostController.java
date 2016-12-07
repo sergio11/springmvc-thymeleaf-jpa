@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.admin;
 
 import exceptions.PostNotFoundException;
 import javax.validation.Valid;
@@ -24,8 +24,8 @@ import services.PostService;
  *
  * @author sergio
  */
-@Controller
-@RequestMapping("/posts")
+@Controller("AdminPostController")
+@RequestMapping("/admin/posts")
 public class PostController {
     
     @Autowired
@@ -40,23 +40,23 @@ public class PostController {
             }
             model.addAttribute("post", post);
         }
-        return "post/show";
+        return "admin/post/show";
     }
     
     @GetMapping("/create")
     public String showCreatePostForm(Model model){
         model.addAttribute("post", new Post());
-        return "post/create";
+        return "admin/post/create";
     }
     
     @PostMapping("/create")
     public String processPost(@ModelAttribute @Valid Post post, Errors errors, RedirectAttributes model){
         if(errors.hasErrors()){
-            return "post/create";
+            return "admin/post/create";
         }
         postService.create(post);
         model.addAttribute("postId", post.getId());
         model.addFlashAttribute("post", post);
-        return "redirect:/posts/{postId}";
+        return "redirect:/admin/posts/{postId}";
     }
 }

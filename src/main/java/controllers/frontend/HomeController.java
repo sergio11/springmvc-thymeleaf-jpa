@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package controllers.frontend;
 
 import java.util.List;
 import models.Post;
@@ -29,6 +29,6 @@ public class HomeController {
     public String index(Model model) {
         List<Post> latest5Posts = postService.findLatest5();
         model.addAttribute("latest5posts", latest5Posts);
-        return "index";
+        return "frontend/index";
     }
 }
