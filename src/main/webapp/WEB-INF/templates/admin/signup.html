@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorator="admin/layout">
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <div layout:fragment="page-content">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form method="POST" action="#" th:action="@{/admin/signup}" th:object="${user}" class="login-wrapper" >
+                        <div class="box">
+                            <div class="content-wrap">
+                                <h6 th:text="#{signup.title}">Sign Up</h6>
+                                <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                                    <ul>
+                                        <li th:each="err: ${#fields.errors('*')}" th:text="${err}" class="text-left">Input is incorrect</li>
+                                    </ul>
+                                </div>
+                                <input th:field="*{username}" class="form-control" type="text" placeholder="Username" />
+                                <input th:field="*{password}" class="form-control" type="password" placeholder="Password" />
+                                <input th:field="*{confirmPassword}" class="form-control" type="password" placeholder="Confirm Password">
+                                <input th:field="*{email}" class="form-control" type="email" placeholder="Email">
+                                <div class="action">
+                                    <button type="submit" class="btn btn-primary signup">Sign Up</button>
+                                </div>                
+                            </div>
+                        </div>
+
+                        <div class="already">
+                            <p th:text="#{signup.go.to.login}">Have an account already?</p>
+                            <a th:href="@{/admin/login}">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

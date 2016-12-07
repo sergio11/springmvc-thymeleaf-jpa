@@ -1,27 +1,45 @@
 package models;
 
+import constraints.FieldMatch;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.Transient;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "users")
+@FieldMatch(first = "password", second = "confirmPassword", message = "{user.pass.not.match}")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message="{user.username.notnull}")
+    @Size(min=5, max=15, message="{user.username.size}")
     @Column(nullable = false, length = 30, unique = true)
     private String username;
     @Column(length = 60)
+    @NotNull(message="{user.pass.notnull}")
+    @Size(min=8, max=25, message="{user.pass.size}")
     private String password;
-    private Boolean enabled;
+    @NotNull(message="{user.confirm.pass.notnull}")
+    @Size(min=8, max=25)
+    @Transient
+    private String confirmPassword;
+    @Column(nullable = false, length = 30, unique = true)
+    @NotNull(message="{user.email.notnull}")
+    @Email(message="{user.email.invalid}")
+    private String email;
+    private Boolean enabled = true;
     @Column(length = 100)
     private String fullName;
     @OneToMany(mappedBy = "author")
@@ -32,12 +50,11 @@ public class User {
     }
 
     public User(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.enabled = user.getEnabled();
-        this.fullName = user.getFullName();
-        this.posts = user.getPosts();
+        this.id = user.id;
+        this.username = user.username;
+        this.password = user.password;
+        this.email = user.email;
+        this.fullName = user.fullName;
     }
     
     public Long getId() {
@@ -64,6 +81,22 @@ public class User {
         this.password = password;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+   
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     public Boolean getEnabled() {
         return enabled;
     }
@@ -90,6 +123,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
     }
 }
