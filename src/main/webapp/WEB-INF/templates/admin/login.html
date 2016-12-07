@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html layout:decorator="admin/layout">
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <div layout:fragment="page-content">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form method="post" class="login-wrapper">
+                        <div class="box">
+                            <div class="content-wrap">
+                                <h6 th:text="#{login.sign.in}">Sign In</h6>
+                                <div class="social">
+                                    <a class="face_login" href="#">
+                                        <span class="face_icon">
+                                            <img th:src="@{/img/facebook.png}" alt="fb">
+                                        </span>
+                                        <span class="text" th:text="#{login.sign.in.with.facebook}">Sign in with Facebook</span>
+                                    </a>
+                                    <div class="division">
+                                        <hr class="left">
+                                        <span>or</span>
+                                        <hr class="right">
+                                    </div>
+                                </div>
+                                <input class="form-control" name="username" type="text" th:placeholder="#{login.username.placeholder}">
+                                <input class="form-control" name="password" type="password" th:placeholder="#{login.password.placeholder}">
+                                <div class="action">
+                                    <button type="submit" class="btn btn-primary signup">Login</button>
+                                </div>                
+                            </div>
+                        </div>
+
+                        <div class="already">
+                            <p th:text="#{login.not.account.yet}">Don't have an account yet?</p>
+                            <a th:href="@{/admin/signup}" href="#" th:text="#{login.signup}">Sign Up</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

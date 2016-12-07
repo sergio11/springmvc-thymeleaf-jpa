@@ -38,6 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         registry.addViewController("/403").setViewName("403");
         registry.addViewController("/about").setViewName("frontend/about");
         registry.addViewController("/admin").setViewName("admin/index");
+        registry.addViewController("/admin/login").setViewName("admin/login");
     }
     
     @Override
@@ -52,7 +53,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         registry.addInterceptor(new CacheControlHandlerInterceptor());
     }
     
-  
     @Bean(name="multipartResolver")
     public MultipartResolver provideMultipartResolver(){
         return new StandardServletMultipartResolver();
