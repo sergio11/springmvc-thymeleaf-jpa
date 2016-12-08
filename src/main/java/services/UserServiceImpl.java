@@ -5,8 +5,7 @@
  */
 package services;
 
-import exceptions.EmailExistsException;
-import exceptions.UsernameExistsException;
+import exceptions.UserAlredyExistsException;
 import javax.transaction.Transactional;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,30 +27,12 @@ public class UserServiceImpl implements UserService {
     
     @Transactional
     @Override
-    public void registerNewUserAccount(User user) throws EmailExistsException {
-        if (emailExist(user.getEmail())) {   
-            throw new EmailExistsException(user.getEmail());
-        }
-        if (usernameExist(user.getUsername())) {   
-            throw new UsernameExistsException(user.getUsername());
+    public void registerNewUserAccount(User user) throws UserAlredyExistsException {
+        
+        if (userRepository.existsUserWithEmailOrUsername(user.getEmail(), user.getUsername()) > 0){   
+            throw new UserAlredyExistsException(user.getEmail(), user.getUsername());
         }
         user.setPassword(passwordEncoder.encode(user.getPasswordClear()));
         userRepository.save(user);
-    }
-    
-    private boolean emailExist(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean usernameExist(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user != null) {
-            return true;
-        }
-        return false;
     }
 }

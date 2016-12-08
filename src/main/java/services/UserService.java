@@ -5,8 +5,7 @@
  */
 package services;
 
-import exceptions.EmailExistsException;
-import exceptions.UsernameExistsException;
+import exceptions.UserAlredyExistsException;
 import models.User;
 
 /**
@@ -14,5 +13,5 @@ import models.User;
  * @author sergio
  */
 public interface UserService {
-    void registerNewUserAccount(User user) throws EmailExistsException, UsernameExistsException;
+    void registerNewUserAccount(User user) throws UserAlredyExistsException;
 }

@@ -7,8 +7,7 @@ package controllers.admin;
 
 import controllers.ErrorController;
 import es.sandbox.ui.messages.Flash;
-import exceptions.EmailExistsException;
-import exceptions.UsernameExistsException;
+import exceptions.UserAlredyExistsException;
 import javax.validation.Valid;
 import models.User;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ import services.UserService;
 @RequestMapping("/admin")
 public class SignupController {
     
-    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static Logger logger = LoggerFactory.getLogger(SignupController.class);
     
     @Autowired
     private UserService userService;
@@ -51,12 +50,9 @@ public class SignupController {
                 userService.registerNewUserAccount(user);
                 model.addFlashAttribute("message", user);
                 viewName = "redirect:/admin";
-            }catch(EmailExistsException e){
+            }catch(UserAlredyExistsException e){
                 logger.error("Email alredy exists");
-                errors.rejectValue("email", "user.email.exists");
-            }catch(UsernameExistsException e){
-                logger.error("Username alredy exists");
-                errors.rejectValue("username", "user.username.exists");
+                errors.rejectValue("email", "user.exists");
             }
         }
         return viewName;

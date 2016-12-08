@@ -12,19 +12,29 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  *
  * @author sergio
  */
-@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Email alredy exists")
-public class EmailExistsException extends RuntimeException {
+@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="User alredy exists")
+public class UserAlredyExistsException extends RuntimeException {
     private String email;
+    private String username;
 
-    public EmailExistsException(String email) {
-        super();
+    public UserAlredyExistsException(String email, String username) {
         this.email = email;
+        this.username = username;
     }
+    
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
