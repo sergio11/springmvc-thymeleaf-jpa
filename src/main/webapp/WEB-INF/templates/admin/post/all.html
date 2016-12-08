@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html layout:decorator="admin/layout">
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <div layout:fragment="main-content">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title" th:text="#{posts.all.title}">Posts</div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <a href="#" th:href="@{/admin/posts/create}" th:text="#{posts.all.create}" class="btn btn-primary btn-lg text-uppercase">Create new Post</a>
+                    </div>
+                    <table id="posts" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase" th:text="#{posts.all.th.title}">Title</th>
+                                <th class="text-uppercase" th:text="#{posts.all.th.subtitle}">Subtitle</th>
+                                <th class="text-uppercase" th:text="#{posts.all.th.author}">Author</th>
+                                <th class="text-uppercase" th:text="#{posts.all.th.date}">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${not #lists.isEmpty(posts)}" th:each="p:${posts}">
+                                <td th:text="${p.title}">Title</td>
+                                <td th:text="${p.subtitle}">Subtitle</td>
+                                <td th:text="${p.author.fullName}">Author</td>
+                                <td th:text="${p.date}">Date</td>
+                            </tr>
+                            <tr class="warning" th:if="${#lists.isEmpty(posts)}">
+                                <td colspan="4" class="text-center" th:text="#{posts.all.not.found}">No items found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div layout:fragment="additional-js">
+            <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/js/dataTables.bootstrap.js}"></script>
+            <script>
+                $(document).ready(function() {
+                        $('#posts').dataTable();
+                });
+            </script>
+        </div>
+    </body>
+</html>

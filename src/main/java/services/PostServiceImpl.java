@@ -50,5 +50,10 @@ public class PostServiceImpl implements PostService {
     public void deleteById(Long id) {
         postRepository.delete(id);
     }
+
+    @Override
+    public List<Post> findPostsByAuthor(Long id) {
+        return postRepository.findByAuthorId(id);
+    }
     
 }

@@ -7,4 +7,5 @@ import models.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findFirst5ByOrderByDateDesc();
+    List<Post> findByAuthorId(Long id);
 }

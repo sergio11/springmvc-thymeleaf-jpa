@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/admin/posts}" href="#">
+                                <a th:href="@{/admin/posts/all}" href="#">
                                     <i class="fa fa-file-text"></i> 
                                     <span th:text="#{admin.navigation.posts}">Posts</span>
                                 </a>
@@ -86,17 +86,6 @@
                                     <i class="fa fa-user"></i> 
                                     <span th:text="#{admin.navigation.users}">Users</span>
                                 </a>
-                            </li>
-                            <li class="submenu">
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-list"></i> Pages
-                                    <span class="caret pull-right"></span>
-                                </a>
-                                <!-- Sub menu -->
-                                <ul>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="signup.html">Signup</a></li>
-                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -111,5 +100,7 @@
         <script th:src="@{/js/jquery.min.js}"></script>
         <!-- Bootstrap Core JavaScript -->
         <script th:src="@{/js/bootstrap.min.js}"></script>
+        <!-- Additional JS libraries -->
+        <div layout:fragment="additional-js"></div>
     </body>
 </html>
