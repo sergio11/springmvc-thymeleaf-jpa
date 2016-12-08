@@ -27,7 +27,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 @Configuration
 @EnableWebMvc
 @ComponentScan(value = { "controllers", "services" })
-@Import(value = { ThymeleafConfig.class, i18nConfig.class })
+@Import(value = { ThymeleafConfig.class, i18nConfig.class, CustomFlashMessagesConfigurer.class })
 public class WebConfig extends WebMvcConfigurerAdapter{
     
     @Autowired
@@ -39,7 +39,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         registry.addViewController("/about").setViewName("frontend/about");
         registry.addViewController("/admin").setViewName("admin/index");
         registry.addViewController("/admin/login").setViewName("admin/login");
-        registry.addViewController("/admin/signup").setViewName("admin/signup");
     }
     
     @Override

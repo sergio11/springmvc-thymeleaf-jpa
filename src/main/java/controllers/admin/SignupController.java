@@ -5,6 +5,7 @@
  */
 package controllers.admin;
 
+import es.sandbox.ui.messages.Flash;
 import javax.validation.Valid;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,13 @@ public class SignupController {
     }
     
     @PostMapping("/signup")
-    public String processSignup(@ModelAttribute @Valid User user, Errors errors, RedirectAttributes model){
+    public String processSignup(Flash flash, @ModelAttribute @Valid User user, Errors errors, RedirectAttributes model){
         if(errors.hasErrors()){
             return "admin/signup";
         }
         userRepository.save(user);
-        model.addFlashAttribute("user", user);
+        flash.success("message.signup.success", user.getFullName());
+        model.addFlashAttribute("message", user);
         return "redirect:/admin";
     }
 }
