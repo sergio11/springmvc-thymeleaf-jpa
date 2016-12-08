@@ -5,9 +5,14 @@
  */
 package controllers.admin;
 
+import controllers.ErrorController;
 import es.sandbox.ui.messages.Flash;
+import exceptions.EmailExistsException;
+import exceptions.UsernameExistsException;
 import javax.validation.Valid;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import repositories.UserRepository;
+import services.UserService;
 
 /**
  *
@@ -27,8 +32,10 @@ import repositories.UserRepository;
 @RequestMapping("/admin")
 public class SignupController {
     
+    private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     
     @GetMapping("/signup")
     public String showSignupForm(Model model){
@@ -37,13 +44,21 @@ public class SignupController {
     }
     
     @PostMapping("/signup")
-    public String processSignup(Flash flash, @ModelAttribute @Valid User user, Errors errors, RedirectAttributes model){
-        if(errors.hasErrors()){
-            return "admin/signup";
+    public String processSignup(@ModelAttribute @Valid User user, Errors errors, RedirectAttributes model){
+        String viewName = "admin/signup";
+        if(!errors.hasErrors()){
+            try {
+                userService.registerNewUserAccount(user);
+                model.addFlashAttribute("message", user);
+                viewName = "redirect:/admin";
+            }catch(EmailExistsException e){
+                logger.error("Email alredy exists");
+                errors.rejectValue("email", "user.email.exists");
+            }catch(UsernameExistsException e){
+                logger.error("Username alredy exists");
+                errors.rejectValue("username", "user.username.exists");
+            }
         }
-        userRepository.save(user);
-        flash.success("message.signup.success", user.getFullName());
-        model.addFlashAttribute("message", user);
-        return "redirect:/admin";
+        return viewName;
     }
 }

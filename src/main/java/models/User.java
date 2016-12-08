@@ -17,7 +17,7 @@ import org.hibernate.validator.constraints.Email;
 
 @Entity
 @Table(name = "users")
-@FieldMatch(first = "password", second = "confirmPassword", message = "{user.pass.not.match}")
+@FieldMatch(first = "passwordClear", second = "confirmPassword", message = "{user.pass.not.match}")
 public class User {
 
     @Id
@@ -27,15 +27,16 @@ public class User {
     @Size(min=5, max=15, message="{user.username.size}")
     @Column(nullable = false, length = 30, unique = true)
     private String username;
-    @Column(length = 60)
     @NotNull(message="{user.pass.notnull}")
     @Size(min=8, max=25, message="{user.pass.size}")
-    private String password;
+    @Transient
+    private String passwordClear;
     @NotNull(message="{user.confirm.pass.notnull}")
-    @Size(min=8, max=25)
     @Transient
     private String confirmPassword;
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(length = 60)
+    private String password;
+    @Column(nullable = false, length = 90, unique = true)
     @NotNull(message="{user.email.notnull}")
     @Email(message="{user.email.invalid}")
     private String email;
@@ -52,6 +53,8 @@ public class User {
     public User(User user) {
         this.id = user.id;
         this.username = user.username;
+        this.passwordClear = user.passwordClear;
+        this.confirmPassword = user.confirmPassword;
         this.password = user.password;
         this.email = user.email;
         this.fullName = user.fullName;
@@ -72,6 +75,15 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getPasswordClear() {
+        return passwordClear;
+    }
+
+    public void setPasswordClear(String passwordClear) {
+        this.passwordClear = passwordClear;
+    }
+    
 
     public String getPassword() {
         return password;
@@ -123,6 +135,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
     }
+
+    
 }

@@ -43,14 +43,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .regexMatchers("/admin/(login|signup)").anonymous()
+                .antMatchers("/admin/signup").anonymous()
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/admin/login")
+                .formLogin().loginPage("/admin/login").permitAll()
                 .usernameParameter("username").passwordParameter("password")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout")
+                .logout().logoutSuccessUrl("/admin/login?logout")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()

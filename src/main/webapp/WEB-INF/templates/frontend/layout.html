@@ -40,16 +40,16 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a th:href="@{/}" th:text="#{navigation.home}">Home</a>
+                                <a th:href="@{/}" th:text="#{frontend.navigation.home}">Home</a>
                             </li>
                             <li>
-                                <a th:href="@{/about}" th:text="#{navigation.about}">About</a>
+                                <a th:href="@{/about}" th:text="#{frontend.navigation.about}">About</a>
                             </li>
                             <li sec:authorize="isAuthenticated()">
-                                <a th:href="@{/admin}" th:text="#{navigation.admin}">Admin Panel</a>
+                                <a th:href="@{/admin}" th:text="#{frontend.navigation.admin}">Admin Panel</a>
                             </li>
                             <li sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/admin/login}" th:text="#{navigation.login}">Login to access admin panel</a>
+                                <a th:href="@{/admin/login}" th:text="#{frontend.navigation.login}">Login to access admin panel</a>
                             </li>
                             <li>
                                 <a href="contact.html">Contact</a>
