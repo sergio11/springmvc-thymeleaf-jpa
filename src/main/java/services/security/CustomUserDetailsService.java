@@ -5,6 +5,7 @@
  */
 package services.security;
 
+import java.io.Serializable;
 import java.util.List;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import repositories.UserRolesRepository;
  * @author sergio
  */
 @Service("customUserDetailsService")
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService, Serializable {
 
     private final UserRepository userRepository;
     private final UserRolesRepository userRolesRepository;

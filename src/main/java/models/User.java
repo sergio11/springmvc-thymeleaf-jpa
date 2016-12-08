@@ -1,6 +1,7 @@
 package models;
 
 import constraints.FieldMatch;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import org.hibernate.validator.constraints.Email;
 @Entity
 @Table(name = "users")
 @FieldMatch(first = "passwordClear", second = "confirmPassword", message = "{user.pass.not.match}")
-public class User {
+public class User implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

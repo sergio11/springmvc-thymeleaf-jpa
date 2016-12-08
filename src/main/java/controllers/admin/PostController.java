@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.PostService;
+import services.security.CurrentUser;
+import services.security.CurrentUserAttached;
+import services.security.CustomUserDetails;
 
 /**
  *
@@ -33,7 +35,7 @@ public class PostController {
     private PostService postService;
     
     @GetMapping("/all")
-    public String all(@AuthenticationPrincipal User activeUser, Model model){
+    public String all(@CurrentUser CustomUserDetails activeUser, Model model){
         List<Post> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
         return "admin/post/all";
@@ -46,13 +48,15 @@ public class PostController {
     }
     
     @PostMapping("/create")
-    public String processPost(@ModelAttribute @Valid Post post, Errors errors, RedirectAttributes model){
+    public String processPost(
+            @CurrentUserAttached CustomUserDetails activeUser,
+            @ModelAttribute @Valid Post post, 
+            Errors errors){
         if(errors.hasErrors()){
             return "admin/post/create";
         }
+        post.setAuthor(activeUser);
         postService.create(post);
-        model.addAttribute("postId", post.getId());
-        model.addFlashAttribute("post", post);
-        return "redirect:/admin/posts/{postId}";
+        return "redirect:/admin/posts/all";
     }
 }

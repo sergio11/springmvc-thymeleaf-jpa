@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,33 +27,32 @@ public class Post implements Serializable {
     private Long id;
     
     @NotNull(message="{post.title.notnull}")
-    @Size(min=5, max=25, message="{post.title.size}")
+    @Size(min=5, max=60, message="{post.title.size}")
     @Column(nullable = false, length = 300)
     private String title;
     
     @NotNull(message="{post.subtitle.notnull}")
-    @Size(min=5, max=25, message="{post.subtitle.size}")
+    @Size(min=5, max=40, message="{post.subtitle.size}")
     @Column(nullable = false, length = 300)
     private String subtitle;
 
+    @NotNull(message="{post.body.notnull}")
     @Lob
     @Column(nullable = true)
     private String body;
 
-    @NotNull(message="{post.subtitle.notnull}")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private User author;
-
+    
+    @NotNull
     @Column(nullable = false)
     private Date date = new Date();
 
-    public Post() {
-        super();
-    }
+    public Post() {}
 
-    public Post(String title, String body, User author, Date date) {
-        super();
+    public Post(String title, String subtitle, String body, User author, Date date) {
         this.title = title;
+        this.subtitle = subtitle;
         this.body = body;
         this.author = author;
         this.date = date;
