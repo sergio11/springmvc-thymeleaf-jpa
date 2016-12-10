@@ -6,6 +6,8 @@
 package controllers.admin;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.Valid;
 import models.Post;
 import models.User;
@@ -49,12 +51,13 @@ public class PostController {
     
     @PostMapping("/create")
     public String processPost(
-            @CurrentUserAttached CustomUserDetails activeUser,
+            @CurrentUserAttached User activeUser,
             @ModelAttribute @Valid Post post, 
             Errors errors){
         if(errors.hasErrors()){
             return "admin/post/create";
         }
+        Logger.getLogger(PostController.class.getName()).log(Level.INFO, activeUser.toString());
         post.setAuthor(activeUser);
         postService.create(post);
         return "redirect:/admin/posts/all";

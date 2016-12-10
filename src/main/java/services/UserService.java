@@ -7,6 +7,7 @@ package services;
 
 import exceptions.UserAlredyExistsException;
 import models.User;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,5 @@ import models.User;
  */
 public interface UserService {
     void registerNewUserAccount(User user) throws UserAlredyExistsException;
+    List<User> getAllUsers();
 }

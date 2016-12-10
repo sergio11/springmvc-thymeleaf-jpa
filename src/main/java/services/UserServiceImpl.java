@@ -6,9 +6,11 @@
 package services;
 
 import exceptions.UserAlredyExistsException;
+import java.util.List;
 import javax.transaction.Transactional;
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repositories.UserRepository;
@@ -34,5 +36,10 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(user.getPasswordClear()));
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll(new Sort(Sort.Direction.DESC, "fullName"));
     }
 }

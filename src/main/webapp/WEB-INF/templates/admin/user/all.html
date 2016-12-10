@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="admin/layout">
+    <head>
+        <title>TODO supply a title</title>
+    </head>
+    <body>
+        <div layout:fragment="main-content">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title" th:text="#{users.all.title}">Users</div>
+                </div>
+                <div class="panel-body">
+                    <table id="posts" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered ">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.username}">Username</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.fullname}">Fullname</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.email}">Email</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.status}">Status</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.posts}">Artículos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${not #lists.isEmpty(users)}" th:each="u:${users}">
+                                <td th:text="${u.username}" class="text-center">Username</td>
+                                <td th:text="${u.fullName}" class="text-center">Fullname</td>
+                                <td th:text="${u.email}" class="text-center">Email</td>
+                                <td class="text-center">
+                                    <span class="label label-success" th:if="${u.enabled}">Enabled</span>
+                                    <span class="label label-success" th:if="${not u.enabled}">Disabled</span>
+                                </td>
+                                <td class="text-center">
+                                    <span th:if="${not u.posts.isEmpty()}" th:text="${u.posts.size()}"class="label label-info">Posts</span>
+                                    <span th:if="${u.posts.isEmpty()}" class="label label-danger">Not Posts</span>
+                                </td>
+                            </tr>
+                            <tr class="warning" th:if="${#lists.isEmpty(users)}">
+                                <td colspan="5" class="text-center" th:text="#{users.all.not.found}">No Users found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <th:block layout:fragment="scripts">
+            <script th:src="@{/js/jquery.dataTables.min.js}"></script>
+            <script th:src="@{/js/dataTables.bootstrap.js}"></script>
+            <script>
+                $(document).ready(function() {
+                        $('#posts').dataTable();
+                });
+            </script>
+        </th:block>
+    </body>
+</html>

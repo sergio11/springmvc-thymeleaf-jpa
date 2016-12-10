@@ -41,7 +41,7 @@ public class Post implements Serializable {
     @Column(nullable = true)
     private String body;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private User author;
     
     @NotNull
