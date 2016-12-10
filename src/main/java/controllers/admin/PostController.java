@@ -6,13 +6,13 @@
 package controllers.admin;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.validation.Valid;
 import models.Post;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import services.PostService;
+import services.UserService;
 import services.security.CurrentUser;
 import services.security.CurrentUserAttached;
-import services.security.CustomUserDetails;
 
 /**
  *
@@ -33,11 +33,16 @@ import services.security.CustomUserDetails;
 @RequestMapping("/admin/posts")
 public class PostController {
     
+    private static Logger logger = LoggerFactory.getLogger(PostController.class);
+    
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
     
     @GetMapping("/all")
-    public String all(@CurrentUser CustomUserDetails activeUser, Model model){
+    public String all(Model model){
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Post> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
         return "admin/post/all";
@@ -50,14 +55,12 @@ public class PostController {
     }
     
     @PostMapping("/create")
-    public String processPost(
-            @CurrentUserAttached User activeUser,
-            @ModelAttribute @Valid Post post, 
-            Errors errors){
+    public String processPost(@ModelAttribute @Valid Post post, Errors errors){
         if(errors.hasErrors()){
             return "admin/post/create";
         }
-        Logger.getLogger(PostController.class.getName()).log(Level.INFO, activeUser.toString());
+        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        activeUser = userService.findUserByUsername(activeUser.getUsername());
         post.setAuthor(activeUser);
         postService.create(post);
         return "redirect:/admin/posts/all";

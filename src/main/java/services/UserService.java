@@ -18,4 +18,5 @@ public interface UserService {
     void registerNewUserAccount(User user) throws UserAlredyExistsException;
     List<User> getAllUsers();
     void updateLastLoginAccess(String username, Date lastLoginAccess);
+    User findUserByUsername(String username);
 }

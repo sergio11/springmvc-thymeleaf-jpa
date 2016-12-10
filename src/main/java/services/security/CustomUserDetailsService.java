@@ -39,7 +39,8 @@ public class CustomUserDetailsService implements UserDetailsService, Serializabl
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {
             List<String> userRoles = userRolesRepository.findRoleByUsername(username);
-            return new CustomUserDetails(user, userRoles);
+            user.setUserRoles(userRoles);
+            return user;
         }
     }
 }

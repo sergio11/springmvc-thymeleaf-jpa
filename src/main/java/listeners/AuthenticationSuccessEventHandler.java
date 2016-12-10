@@ -15,7 +15,7 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
 import services.UserService;
-import services.security.CustomUserDetails;
+import models.User;
 
 /**
  *
@@ -33,7 +33,7 @@ public class AuthenticationSuccessEventHandler{
     public void processAuthenticationSuccessEvent(AbstractAuthenticationEvent  e) {
         logger.info("Autenticación realizada ....");
         // Actualizamos la útltima fecha de acceso
-        String username = ((CustomUserDetails) e.getAuthentication().getPrincipal()).getUsername();
+        String username = ((User) e.getAuthentication().getPrincipal()).getUsername();
         logger.info("Actualizando último acceso para user: " + username);
         userService.updateLastLoginAccess(username, new Date());
     }   

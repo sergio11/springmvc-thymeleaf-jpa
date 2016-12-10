@@ -51,4 +51,9 @@ public class UserServiceImpl implements UserService {
     public void updateLastLoginAccess(String username, Date lastLoginAccess) {
         userRepository.updateLastLoginAccess(username, lastLoginAccess);
     }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

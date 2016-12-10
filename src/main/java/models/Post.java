@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "posts")
@@ -26,19 +27,19 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotNull(message="{post.title.notnull}")
+    @NotBlank(message="{post.title.notnull}")
     @Size(min=5, max=60, message="{post.title.size}")
     @Column(nullable = false, length = 300)
     private String title;
     
-    @NotNull(message="{post.subtitle.notnull}")
+    @NotBlank(message="{post.subtitle.notnull}")
     @Size(min=5, max=40, message="{post.subtitle.size}")
     @Column(nullable = false, length = 300)
     private String subtitle;
 
-    @NotNull(message="{post.body.notnull}")
+    @NotBlank(message="{post.body.notnull}")
     @Lob
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String body;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -96,6 +97,7 @@ public class Post implements Serializable {
 
     public void setAuthor(User author) {
         this.author = author;
+        author.addPost(this);
     }
 
     public Date getDate() {

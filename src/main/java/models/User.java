@@ -2,8 +2,10 @@ package models;
 
 import constraints.FieldMatch;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Transient;
@@ -17,11 +19,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "users")
 @FieldMatch(first = "passwordClear", second = "confirmPassword", message = "{user.pass.not.match}")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,6 +67,9 @@ public class User implements Serializable {
     
     @Column(nullable = true)
     private Date lastLoginAccess;
+    
+    @Transient
+    private List<String> userRoles;
 
     public User() {}
 
@@ -145,6 +154,10 @@ public class User implements Serializable {
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
+    
+    public void addPost(Post post){
+        this.posts.add(post);
+    }
 
     public Date getLastLoginAccess() {
         return lastLoginAccess;
@@ -154,6 +167,40 @@ public class User implements Serializable {
         this.lastLoginAccess = lastLoginAccess;
     }
 
+    public List<String> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<String> userRoles) {
+        this.userRoles = userRoles;
+    }
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        String roles= StringUtils.collectionToCommaDelimitedString(userRoles);   
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
