@@ -8,6 +8,7 @@ package services;
 import exceptions.UserAlredyExistsException;
 import models.User;
 import java.util.List;
+import java.util.Date;
 
 /**
  *
@@ -16,4 +17,5 @@ import java.util.List;
 public interface UserService {
     void registerNewUserAccount(User user) throws UserAlredyExistsException;
     List<User> getAllUsers();
+    void updateLastLoginAccess(String username, Date lastLoginAccess);
 }

@@ -6,9 +6,12 @@
 package services;
 
 import exceptions.UserAlredyExistsException;
+import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +25,7 @@ import repositories.UserRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void registerNewUserAccount(User user) throws UserAlredyExistsException {
-        
+        logger.debug("Registrando nuevo usuario: " + user.getUsername());
         if (userRepository.existsUserWithEmailOrUsername(user.getEmail(), user.getUsername()) > 0){   
             throw new UserAlredyExistsException(user.getEmail(), user.getUsername());
         }
@@ -40,6 +44,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userRepository.findAll(new Sort(Sort.Direction.DESC, "fullName"));
+        return userRepository.findAll(new Sort(Sort.Direction.DESC, "lastLoginAccess", "fullName"));
+    }
+
+    @Override
+    public void updateLastLoginAccess(String username, Date lastLoginAccess) {
+        userRepository.updateLastLoginAccess(username, lastLoginAccess);
     }
 }

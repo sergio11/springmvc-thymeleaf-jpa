@@ -22,6 +22,7 @@
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.email}">Email</th>
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.status}">Status</th>
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.posts}">Artículos</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.lastLoginAccess}">Last Login Access</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,9 +38,10 @@
                                     <span th:if="${not u.posts.isEmpty()}" th:text="${u.posts.size()}"class="label label-info">Posts</span>
                                     <span th:if="${u.posts.isEmpty()}" class="label label-danger">Not Posts</span>
                                 </td>
+                                <td th:text="${u.lastLoginAccess}" class="text-center">Last Login Access</td>
                             </tr>
                             <tr class="warning" th:if="${#lists.isEmpty(users)}">
-                                <td colspan="5" class="text-center" th:text="#{users.all.not.found}">No Users found</td>
+                                <td colspan="6" class="text-center" th:text="#{users.all.not.found}">No Users found</td>
                             </tr>
                         </tbody>
                     </table>

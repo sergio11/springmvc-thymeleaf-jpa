@@ -2,6 +2,7 @@ package models;
 
 import constraints.FieldMatch;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -57,9 +58,11 @@ public class User implements Serializable {
     
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Post> posts = new HashSet<Post>();
+    
+    @Column(nullable = true)
+    private Date lastLoginAccess;
 
-    public User() {
-    }
+    public User() {}
 
     public User(User user) {
         this.id = user.id;
@@ -142,7 +145,15 @@ public class User implements Serializable {
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
-    
+
+    public Date getLastLoginAccess() {
+        return lastLoginAccess;
+    }
+
+    public void setLastLoginAccess(Date lastLoginAccess) {
+        this.lastLoginAccess = lastLoginAccess;
+    }
+
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
