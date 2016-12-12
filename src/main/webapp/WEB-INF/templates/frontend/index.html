@@ -23,18 +23,18 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div th:if="${not #lists.isEmpty(latest5posts)}">
-                        <h2 th:text="${home.post.title}">Last 5 articles published.</h2>
+                        <h2 th:text="#{home.post.title}">Last 5 articles published.</h2>
                         <div th:each="p:${latest5posts}">
                             <article class="post-preview" >
-                                <a href="post.html">
+                                <a th:href="@{/posts/{postId}(postId=${p.id})}">
                                     <h2 class="post-title" th:text="${p.title}">Post Title</h2>
                                     <h3 class="post-subtitle" th:text="${p.subtitle}">Post Subtitle</h3>
                                 </a>
                                 <p class="post-meta">
-                                    <span th:if="${p.author}" th:remove="tag">
-                                        Posted by <span th:text="${p.author.fullName != null ? p.author.fullName : p.author.username}">---</span>
+                                    <span th:if="${p.authorName}" th:remove="tag">
+                                        Posted by <span th:text="${p.authorName}">---</span>
                                     </span>
-                                    <span th:text="${#dates.format(p.date, 'dd-MMM-yyyy')}">---</span>
+                                    <span th:text="${p.publication}">---</span>
                                 </p>
                             </article>
                             <hr>

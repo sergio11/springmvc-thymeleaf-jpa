@@ -10,6 +10,7 @@ import models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projection.PostDetail;
+import projection.PostInfo;
 import repositories.PostRepository;
 
 /**
@@ -28,7 +29,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findLatest5() {
+    public List<PostInfo> findLatest5() {
         return postRepository.findFirst5ByOrderByDateDesc();
     }
 

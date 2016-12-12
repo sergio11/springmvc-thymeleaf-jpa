@@ -8,6 +8,7 @@ package services;
 import models.Post;
 import java.util.List;
 import projection.PostDetail;
+import projection.PostInfo;
 
 /**
  *
@@ -15,7 +16,7 @@ import projection.PostDetail;
  */
 public interface PostService {
     List<Post> findAll();
-    List<Post> findLatest5();
+    List<PostInfo> findLatest5();
     List<PostDetail> findPostsByAuthor(Long id);
     Post findById(Long id);
     Post create(Post post);
