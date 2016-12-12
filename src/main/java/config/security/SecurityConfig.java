@@ -6,11 +6,9 @@
 package config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,38 +16,38 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import services.security.CustomUserDetailsService;
 /**
  *
  * @author sergio
  */
 @Configuration
 @EnableWebSecurity
-@ComponentScan(basePackageClasses = CustomUserDetailsService.class)
+@ComponentScan(value = { "handlers", "services" })
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
-    private DefaultAuthenticationEventPublisher defaultAuthenticationEventPublisher;
-
+    private AuthenticationSuccessHandler successHandler;
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
 
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-         auth
-            .authenticationEventPublisher(defaultAuthenticationEventPublisher)
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
             .userDetailsService(userDetailsService)
             .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+                
         http.authorizeRequests()
                 .antMatchers("/admin/signup").anonymous()
                 .antMatchers("/admin/**").authenticated()
@@ -57,9 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/admin/login")
-                    .permitAll()
                     .usernameParameter("username")
                     .passwordParameter("password")
+                    .successHandler(successHandler)
+                    .permitAll()
                 .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout"))
@@ -68,10 +67,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()
                 .csrf();
-    }
-    
-    @Bean
-    public DefaultAuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
-        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
     }
 }
