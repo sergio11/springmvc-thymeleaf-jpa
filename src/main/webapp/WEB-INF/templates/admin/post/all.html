@@ -28,7 +28,7 @@
                             <tr th:if="${not #lists.isEmpty(posts)}" th:each="p:${posts}">
                                 <td th:text="${p.title}">Title</td>
                                 <td th:text="${p.subtitle}">Subtitle</td>
-                                <td th:text="${p.author.fullName}">Author</td>
+                                <td th:text="${p.authorName}">Author</td>
                                 <td th:text="${p.date}">Date</td>
                             </tr>
                             <tr class="warning" th:if="${#lists.isEmpty(posts)}">

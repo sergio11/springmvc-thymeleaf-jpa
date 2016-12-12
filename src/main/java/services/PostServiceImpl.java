@@ -9,6 +9,7 @@ import java.util.List;
 import models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projection.PostDetail;
 import repositories.PostRepository;
 
 /**
@@ -52,7 +53,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findPostsByAuthor(Long id) {
+    public List<PostDetail> findPostsByAuthor(Long id) {
         return postRepository.findByAuthorId(id);
     }
     
