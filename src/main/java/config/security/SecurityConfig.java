@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return encoder;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
          auth
             .authenticationEventPublisher(defaultAuthenticationEventPublisher)
             .userDetailsService(userDetailsService)
@@ -55,8 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and()
-                .formLogin().loginPage("/admin/login").permitAll()
-                .usernameParameter("username").passwordParameter("password")
+                .formLogin()
+                    .loginPage("/admin/login")
+                    .permitAll()
+                    .usernameParameter("username")
+                    .passwordParameter("password")
                 .and()
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/admin/logout"))

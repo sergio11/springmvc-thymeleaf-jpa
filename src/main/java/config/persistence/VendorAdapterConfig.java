@@ -34,4 +34,15 @@ public class VendorAdapterConfig {
         adapter.setDatabasePlatform(env.getProperty("hibernate.dev.dialect"));
         return adapter;
     }
+    
+    @Profile("production")
+    @Bean(name = "jpaVendorAdapter")
+    public JpaVendorAdapter provideJpaVendorAdapterProd() {
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setDatabase(Database.MYSQL);
+        adapter.setShowSql(env.getProperty("hibernate.prod.show_sql", Boolean.class));
+        adapter.setGenerateDdl(env.getProperty("hibernate.prod.hbm2ddl.auto", Boolean.class));
+        adapter.setDatabasePlatform(env.getProperty("hibernate.prod.dialect"));
+        return adapter;
+    }
 }
