@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import projection.PostDetail;
 import services.PostService;
 import services.UserService;
 
@@ -42,7 +43,7 @@ public class PostController {
     public String all(Model model){
         User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         logger.info("Info del usuario: " + activeUser.toString());
-        List<Post> posts = postService.findPostsByAuthor(activeUser.getId());
+        List<PostDetail> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
         return "admin/post/all";
     }
