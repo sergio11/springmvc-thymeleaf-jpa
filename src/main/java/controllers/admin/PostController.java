@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import services.PostService;
 import services.UserService;
-import services.security.CurrentUser;
-import services.security.CurrentUserAttached;
 
 /**
  *
@@ -43,6 +41,7 @@ public class PostController {
     @GetMapping("/all")
     public String all(Model model){
         User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        logger.info("Info del usuario: " + activeUser.toString());
         List<Post> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
         return "admin/post/all";

@@ -18,7 +18,7 @@ public class DataSourceConfig {
     private Environment env;
     
     @Profile("development") // Datasource for development environment
-    @Bean(name = "embeddedDataSource")
+    @Bean(name = "dataSource")
     public DataSource provideEmbeddedDataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.DERBY)
