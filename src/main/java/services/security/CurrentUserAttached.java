@@ -19,5 +19,5 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @Target({ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@AuthenticationPrincipal(expression = "@jpaEntityManager.merge(#this)")
+@AuthenticationPrincipal(expression = "@entityManagerFactory.createEntityManager().merge(#this)")
 public @interface CurrentUserAttached {}
