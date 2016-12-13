@@ -9,9 +9,10 @@ import java.util.List;
 import models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import projection.PostDetail;
-import projection.PostInfo;
 import repositories.PostRepository;
+import projection.PostByAuthor;
+import projection.PostDetail;
+import projection.PostSummary;
 
 /**
  *
@@ -29,13 +30,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostInfo> findLatest5() {
+    public List<PostSummary> findLatest5() {
         return postRepository.findFirst5ByOrderByDateDesc();
     }
 
     @Override
-    public Post findById(Long id) {
-        return postRepository.findOne(id);
+    public PostDetail findById(Long id) {
+        return postRepository.findById(id);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDetail> findPostsByAuthor(Long id) {
+    public List<PostByAuthor> findPostsByAuthor(Long id) {
         return postRepository.findByAuthorId(id);
     }
     

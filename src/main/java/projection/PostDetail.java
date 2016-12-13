@@ -5,17 +5,10 @@
  */
 package projection;
 
-import java.util.Date;
-import org.springframework.beans.factory.annotation.Value;
-
 /**
  *
  * @author sergio
  */
-public interface PostDetail {
-    String getTitle();
-    String getSubtitle();
-    @Value("#{target.author.fullName}")
-    String getAuthorName();
-    Date getDate();
+public interface PostDetail extends PostSummary{
+    String getBody();
 }
