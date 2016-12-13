@@ -11,9 +11,9 @@
         <div layout:fragment="main-content">
             <div class="content-box-large">
                 <div class="panel-heading">
-                    <div class="panel-title text-capitalize" th:text="#{post.create.title}">Create new Post</div>
+                    <div class="panel-title text-capitalize" th:text="#{post.delete.title}">Delete Post</div>
                 </div>
-                <div class="panel-body"  th:replace="admin/fragment/post::form(target=@{/admin/posts/save}, delete=false)"></div>
+                <div class="panel-body" th:replace="admin/fragment/post::form(target=@{/admin/posts/delete}, delete=true)"></div>
             </div>
         </div>
         <th:block layout:fragment="scripts">
@@ -25,6 +25,5 @@
                 });
             </script>
         </th:block>
-        
     </body>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <form th:fragment="form(target, delete)" id="postForm" name="postForm" method="post" action="#" th:action="${target}" th:object="${post}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <ul>
+                    <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                </ul>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label th:text="#{form.post.title.label}">Title</label>
+                    <input type="text" th:readonly="${delete}" th:field="*{title}" th:placeholder="#{form.post.title.placeholder}" class="form-control" id="title" required />
+                    <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12 floating-label-form-group controls">
+                    <label th:text="#{form.post.subtitle.label}">Subtitle</label>
+                    <input type="text" th:readonly="${delete}" th:field="*{subtitle}" th:placeholder="#{form.post.subtitle.placeholder}" class="form-control" id="subtitle" required />
+                    <p class="help-block text-danger"></p>
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12">
+                    <label th:text="#{form.post.body}">Body</label>
+                    <textarea id="bootstrap-editor" th:readonly="${delete}" th:field="*{body}" placeholder="Enter text ..." style="width:98%;height:200px;"></textarea>
+                </div>
+            </div>
+            <input type="hidden" th:field="*{id}"/>
+            <br />
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button type="submit" class="btn btn-success" th:if="${not delete}" th:value="#{form.post.create}">Create</button>
+                    <button type="submit" class="btn btn-danger" th:if="${delete}" th:value="#{form.post.delete}">Delete</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
