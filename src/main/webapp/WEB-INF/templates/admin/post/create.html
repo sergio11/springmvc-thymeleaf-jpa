@@ -14,7 +14,7 @@
                     <div class="panel-title text-capitalize" th:text="#{post.create.title}">Create new Post</div>
                 </div>
                 <div class="panel-body">
-                    <form id="createPost" name="createPost" method="post" action="#" th:action="@{/admin/posts/create}" th:object="${post}" charset="UTF-8">
+                    <form id="createPost" name="createPost" method="post" action="#" th:action="@{/admin/posts/create}" th:object="${post}">
                         <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                             <ul>
                                 <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>

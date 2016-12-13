@@ -3,6 +3,8 @@ package config;
 import config.root.RootConfig;
 import config.web.WebConfig;
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.Filter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
@@ -37,5 +39,12 @@ public final class AppWebAppInitializer extends AbstractAnnotationConfigDispatch
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         servletContext.setInitParameter("spring.profiles.active", "development");
+    }
+    
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        return new Filter[]{characterEncodingFilter};
     }
 }
