@@ -5,18 +5,18 @@
  */
 package projection;
 
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
  * @author sergio
  */
-public interface PostInfo {
+public interface PostByAuthor {
     Long getId();
     String getTitle();
     String getSubtitle();
-    @Value("#{target.author.fullName != null ? target.author.fullName : target.author.username}")
+    @Value("#{target.author.fullName}")
     String getAuthorName();
-    @Value("#{dates.format(target.date, 'dd-MMM-yyyy')}")
-    String getPublication();
+    Date getDate();
 }

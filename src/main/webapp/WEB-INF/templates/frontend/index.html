@@ -32,9 +32,9 @@
                                 </a>
                                 <p class="post-meta">
                                     <span th:if="${p.authorName}" th:remove="tag">
-                                        Posted by <span th:text="${p.authorName}">---</span>
+                                        Posted by <span th:text="${p.authorName}">Author Name</span>
                                     </span>
-                                    <span th:text="${p.publication}">---</span>
+                                    <span th:text="${#dates.format(p.date, #messages.msg('app.dateformat'))}">Publication Date</span>
                                 </p>
                             </article>
                             <hr>

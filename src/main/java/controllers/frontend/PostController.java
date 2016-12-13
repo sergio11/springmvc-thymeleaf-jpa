@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import projection.PostDetail;
 import services.PostService;
 
 /**
@@ -31,7 +32,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public String show(@PathVariable Long postId, Model model){
         if(!model.containsAttribute("post")){
-            Post post = postService.findById(postId);
+            PostDetail post = postService.findById(postId);
             if(post == null){
                 throw new PostNotFoundException();
             }

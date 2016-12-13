@@ -22,6 +22,7 @@
                                 <th class="text-uppercase" th:text="#{posts.all.th.subtitle}">Subtitle</th>
                                 <th class="text-uppercase" th:text="#{posts.all.th.author}">Author</th>
                                 <th class="text-uppercase" th:text="#{posts.all.th.date}">Date</th>
+                                <th class="text-uppercase" th:text="#{posts.all.th.actions}">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,9 +31,14 @@
                                 <td th:text="${p.subtitle}">Subtitle</td>
                                 <td th:text="${p.authorName}">Author</td>
                                 <td th:text="${p.date}">Date</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="#" th:href="@{/posts/{postId}(postId=${p.id})}" class="btn btn-xs btn-info"><span class="fa fa-eye"></span></a>
+                                    </div>
+                                </td>
                             </tr>
                             <tr class="warning" th:if="${#lists.isEmpty(posts)}">
-                                <td colspan="4" class="text-center" th:text="#{posts.all.not.found}">No items found</td>
+                                <td colspan="5" class="text-center" th:text="#{posts.all.not.found}">No items found</td>
                             </tr>
                         </tbody>
                     </table>

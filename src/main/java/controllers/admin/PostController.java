@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import projection.PostDetail;
 import services.PostService;
 import services.security.CurrentUser;
 import services.security.CurrentUserAttached;
+import projection.PostByAuthor;
 /**
  *
  * @author sergio
@@ -39,7 +39,7 @@ public class PostController {
     @GetMapping("/all")
     public String all(@CurrentUser User activeUser, Model model){
         logger.info("Info del usuario: " + activeUser.toString());
-        List<PostDetail> posts = postService.findPostsByAuthor(activeUser.getId());
+        List<PostByAuthor> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
         return "admin/post/all";
     }

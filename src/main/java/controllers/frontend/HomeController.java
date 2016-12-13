@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import projection.PostInfo;
 import services.PostService;
+import projection.PostSummary;
 
 /**
  *
@@ -28,7 +28,7 @@ public class HomeController {
     @CacheControl(maxAge = 300)
     @RequestMapping(value = {"/", "/home"})
     public String index(Model model) {
-        List<PostInfo> latest5Posts = postService.findLatest5();
+        List<PostSummary> latest5Posts = postService.findLatest5();
         model.addAttribute("latest5posts", latest5Posts);
         return "frontend/index";
     }

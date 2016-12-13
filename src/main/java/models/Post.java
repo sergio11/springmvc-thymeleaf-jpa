@@ -42,7 +42,7 @@ public class Post implements Serializable {
     @Column(nullable = false)
     private String body;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User author;
     
     @NotNull
