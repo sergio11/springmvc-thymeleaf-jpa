@@ -25,9 +25,9 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
  * @author sergio
  */
 @Configuration
-@EnableWebMvc
 @ComponentScan(value = { "controllers", "services", "listeners"})
-@Import(value = { ThymeleafConfig.class, i18nConfig.class, CustomFlashMessagesConfigurer.class })
+@Import(value = { ThymeleafConfig.class, i18nConfig.class })
+@EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter{
     
     @Autowired

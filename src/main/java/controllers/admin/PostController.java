@@ -12,7 +12,6 @@ import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -22,8 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import projection.PostDetail;
 import services.PostService;
-import services.UserService;
-
+import services.security.CurrentUser;
+import services.security.CurrentUserAttached;
 /**
  *
  * @author sergio
@@ -36,12 +35,9 @@ public class PostController {
     
     @Autowired
     private PostService postService;
-    @Autowired
-    private UserService userService;
     
     @GetMapping("/all")
-    public String all(Model model){
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String all(@CurrentUser User activeUser, Model model){
         logger.info("Info del usuario: " + activeUser.toString());
         List<PostDetail> posts = postService.findPostsByAuthor(activeUser.getId());
         model.addAttribute("posts", posts);
@@ -55,12 +51,10 @@ public class PostController {
     }
     
     @PostMapping("/create")
-    public String processPost(@ModelAttribute @Valid Post post, Errors errors){
+    public String processPost(@ModelAttribute @Valid Post post, Errors errors, @CurrentUserAttached User activeUser){
         if(errors.hasErrors()){
             return "admin/post/create";
         }
-        User activeUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        activeUser = userService.findUserByUsername(activeUser.getUsername());
         post.setAuthor(activeUser);
         postService.create(post);
         return "redirect:/admin/posts/all";

@@ -5,8 +5,6 @@
  */
 package controllers.admin;
 
-import controllers.ErrorController;
-import es.sandbox.ui.messages.Flash;
 import exceptions.UserAlredyExistsException;
 import javax.validation.Valid;
 import models.User;

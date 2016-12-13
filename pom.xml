@@ -188,22 +188,6 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
-        <!-- Flash Messages -->
-        <dependency>
-            <groupId>es.sandbox.ui.messages</groupId>
-            <artifactId>flash-messages-core</artifactId>
-            <version>${flash.messages}</version>
-        </dependency>
-        <dependency>
-            <groupId>es.sandbox.ui.messages</groupId>
-            <artifactId>flash-messages-spring</artifactId>
-            <version>${flash.messages}</version>
-        </dependency>
-        <dependency>
-            <groupId>es.sandbox.ui.messages</groupId>
-            <artifactId>flash-messages-taglibs</artifactId>
-            <version>${flash.messages}</version>
-        </dependency>
     </dependencies>
 
     <build>
