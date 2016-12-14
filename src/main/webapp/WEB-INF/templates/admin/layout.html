@@ -69,13 +69,13 @@
                                     <span th:text="#{admin.navigation.home}">Home</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('BLOG_CONTRIBUTOR')">
                                 <a th:href="@{/admin/posts/all}" href="#">
                                     <i class="fa fa-file-text"></i> 
                                     <span th:text="#{admin.navigation.posts}">Posts</span>
                                 </a>
                             </li>
-                            <li>
+                            <li sec:authorize="hasRole('BLOG_ADMIN')">
                                 <a th:href="@{/admin/users/all}" href="#">
                                     <i class="fa fa-user"></i> 
                                     <span th:text="#{admin.navigation.users}">Users</span>

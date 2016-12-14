@@ -39,7 +39,7 @@ public class PersistenceConfig {
     }
     
     @Bean(name="repositoryPopulator")
-    public Jackson2RepositoryPopulatorFactoryBean provideJackson2RepositoryPopulatorFactoryBean(){
+    public Jackson2RepositoryPopulatorFactoryBean  provideJackson2RepositoryPopulatorFactoryBean(){
         Resource sourceData = new ClassPathResource("data.json");
         Jackson2RepositoryPopulatorFactoryBean factory = new Jackson2RepositoryPopulatorFactoryBean();
         factory.setResources(new Resource[] { sourceData });

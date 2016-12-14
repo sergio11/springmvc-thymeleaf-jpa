@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Transient;
@@ -14,6 +13,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -68,8 +70,13 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = true)
     private Date lastLoginAccess;
     
-    @Transient
-    private List<String> userRoles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+      name="USER_ROLES",
+      joinColumns=@JoinColumn(name="USER_ID", referencedColumnName="ID"),
+      inverseJoinColumns=@JoinColumn(name="ROLE_ID", referencedColumnName="ID"))
+    private Set<Role> roles;
 
     public User() {}
 
@@ -167,18 +174,22 @@ public class User implements Serializable, UserDetails {
         this.lastLoginAccess = lastLoginAccess;
     }
 
-    public List<String> getUserRoles() {
-        return userRoles;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setUserRoles(List<String> userRoles) {
-        this.userRoles = userRoles;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void addRole(Role role){
+        this.roles.add(role);
     }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String roles= StringUtils.collectionToCommaDelimitedString(userRoles);   
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
+        String userRoles = StringUtils.collectionToCommaDelimitedString(roles);
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(userRoles);
     }
 
     @Override
@@ -200,9 +211,11 @@ public class User implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + ", lastLoginAccess=" + lastLoginAccess + ", roles=" + roles + '}';
     }
+    
+    
 }

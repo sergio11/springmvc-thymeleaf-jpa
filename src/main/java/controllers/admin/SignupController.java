@@ -7,6 +7,7 @@ package controllers.admin;
 
 import exceptions.UserAlredyExistsException;
 import javax.validation.Valid;
+import models.Role;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import repositories.RolesRepository;
 import services.UserService;
 
 /**
@@ -33,6 +35,8 @@ public class SignupController {
     
     @Autowired
     private UserService userService;
+    @Autowired
+    private RolesRepository rolesRepository;
     
     @GetMapping("/signup")
     public String showSignupForm(Model model){
@@ -45,6 +49,8 @@ public class SignupController {
         String viewName = "admin/signup";
         if(!errors.hasErrors()){
             try {
+                Role role = rolesRepository.findByName("ROLE_BLOG_CONTRIBUTOR");
+                user.addRole(role);
                 userService.registerNewUserAccount(user);
                 model.addFlashAttribute("message", user);
                 viewName = "redirect:/admin";

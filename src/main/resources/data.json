@@ -1,21 +1,35 @@
 [ 
-    { 
-        "_class" : "models.User",
-        "username" : "sergio11",
-        "passwordClear": "bisite00",
-        "confirmPassword": "bisite00",
-        "password" : "$2a$10$0eCQpFRdw8i6jJzjj/IuNuKpJYnLaO5Yp9xSJ3itcfPmQNXVhmNyu",
-        "email": "sss4esob@gmail.com",
-        "fullName": "Sergio Sánchez Sánchez"
+    {
+        "_class": "models.Role",
+        "@id": 1,
+        "name": "ROLE_BLOG_ADMIN",
+        "description": "Rol de los administradores del blog"
+    },
+    {
+        "_class": "models.Role",
+        "@id": 2,
+        "name": "ROLE_BLOG_CONTRIBUTOR",
+        "description": "Rol de los editores de artículos"
     },
     { 
-        "_class" : "models.User",
-        "username" : "dani33",
+        "_class": "models.User",
+        "username": "sergio11",
         "passwordClear": "bisite00",
         "confirmPassword": "bisite00",
-        "password" : "$2a$10$0eCQpFRdw8i6jJzjj/IuNuKpJYnLaO5Yp9xSJ3itcfPmQNXVhmNyu",
+        "password": "$2a$10$0eCQpFRdw8i6jJzjj/IuNuKpJYnLaO5Yp9xSJ3itcfPmQNXVhmNyu",
+        "email": "sss4esob@gmail.com",
+        "fullName": "Sergio Sánchez Sánchez",
+        "roles": [1, 2]
+    },
+    {
+        "_class": "models.User",
+        "username": "dani33",
+        "passwordClear": "bisite00",
+        "confirmPassword": "bisite00",
+        "password": "$2a$10$0eCQpFRdw8i6jJzjj/IuNuKpJYnLaO5Yp9xSJ3itcfPmQNXVhmNyu",
         "email": "danihiglesias@usal.es",
-        "fullName": "Daniel de la Iglesia"
+        "fullName": "Daniel de la Iglesia",
+        "roles": [2]
     }
 ]
 
