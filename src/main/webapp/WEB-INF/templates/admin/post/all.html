@@ -22,6 +22,7 @@
                                 <th class="text-uppercase" th:text="#{posts.all.th.subtitle}">Subtitle</th>
                                 <th class="text-uppercase" th:text="#{posts.all.th.author}">Author</th>
                                 <th class="text-uppercase" th:text="#{posts.all.th.date}">Date</th>
+                                <th class="text-uppercase" th:text="#{posts.all.th.status}">Status</th>
                                 <th class="text-uppercase" th:text="#{posts.all.th.actions}">Actions</th>
                             </tr>
                         </thead>
@@ -31,6 +32,10 @@
                                 <td th:text="${p.subtitle}">Subtitle</td>
                                 <td th:text="${p.authorName}">Author</td>
                                 <td th:text="${p.date}">Date</td>
+                                <td class="text-center">
+                                    <span th:if="${p.published}" th:text="#{posts.all.status.published}" class="label label-info">Published</span>
+                                    <span th:if="${not p.published}" th:text="#{posts.all.status.not.published}" class="label label-danger">Not Published</span>
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="#" th:href="@{/posts/{postId}(postId=${p.id})}" class="btn btn-xs btn-info"><span class="fa fa-eye"></span></a>
@@ -40,7 +45,7 @@
                                 </td>
                             </tr>
                             <tr class="warning" th:if="${#lists.isEmpty(posts)}">
-                                <td colspan="5" class="text-center" th:text="#{posts.all.not.found}">No items found</td>
+                                <td colspan="6" class="text-center" th:text="#{posts.all.not.found}">No items found</td>
                             </tr>
                         </tbody>
                     </table>

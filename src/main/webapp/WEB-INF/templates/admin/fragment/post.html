@@ -27,6 +27,19 @@
             </div>
             <div class="row control-group">
                 <div class="form-group col-xs-12">
+                    <label class="col-md-2 control-label" th:text="#{form.post.status}">Post status</label>
+                    <div class="radio radio-inline">
+                        <label for="radio_published" th:text="#{form.post.published}">Published</label>
+                        <input th:field="*{published}" type="radio" id="radio_published" name="post_status" value="true" />
+                    </div>
+                    <div class="radio radio-inline">
+                        <label for="radio_not_published" th:text="#{form.post.notpublished}">Not Published</label>
+                        <input th:field="*{published}" type="radio" id="radio_not_published" name="post_status" value="false" />
+                    </div>
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="form-group col-xs-12">
                     <label th:text="#{form.post.body}">Body</label>
                     <textarea id="bootstrap-editor" th:readonly="${delete}" th:field="*{body}" placeholder="Enter text ..." style="width:98%;height:200px;"></textarea>
                 </div>
