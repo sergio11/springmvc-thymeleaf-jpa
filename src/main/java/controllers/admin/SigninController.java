@@ -21,7 +21,7 @@ public class SigninController {
     @GetMapping("/login")
     public String login(HttpServletRequest request){
         String referrer = request.getHeader("Referer");
-        if(referrer!=null){
+        if(referrer!=null && referrer.startsWith("/admin")){
             request.getSession().setAttribute("url_prior_login", referrer);
         }
         return "admin/login";

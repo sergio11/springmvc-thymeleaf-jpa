@@ -38,14 +38,13 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         this.setDefaultTargetUrl(defaultSuccessUrl);
-        logger.info("Autenticación realizada ....");
         String username = ((User)authentication.getPrincipal()).getUsername();
-        logger.info("Actualizando último acceso para user: " + username);
         userService.updateLastLoginAccess(username, new Date());
         HttpSession session = request.getSession();
         if (session != null) {
             String redirectUrl = (String) session.getAttribute("url_prior_login");
             if (redirectUrl != null) {
+                logger.info("Redirigiendo usuario a : " + redirectUrl);
                 // we do not forget to clean this attribute from session
                 session.removeAttribute("url_prior_login");
                 // then we redirect
