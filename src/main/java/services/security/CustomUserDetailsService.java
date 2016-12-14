@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import repositories.UserRepository;
-import repositories.UserRolesRepository;
+import repositories.RolesRepository;
 
 /**
  *
@@ -24,12 +24,10 @@ import repositories.UserRolesRepository;
 public class CustomUserDetailsService implements UserDetailsService, Serializable {
 
     private final UserRepository userRepository;
-    private final UserRolesRepository userRolesRepository;
 
     @Autowired
-    public CustomUserDetailsService(UserRepository userRepository, UserRolesRepository userRolesRepository) {
+    public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.userRolesRepository = userRolesRepository;
     }
 
     @Override
@@ -37,10 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService, Serializabl
         User user = userRepository.findByUsername(username);
         if (null == user) {
             throw new UsernameNotFoundException("No user present with username: " + username);
-        } else {
-            List<String> userRoles = userRolesRepository.findRoleByUsername(username);
-            user.setUserRoles(userRoles);
-            return user;
         }
+        return user;
     }
 }
