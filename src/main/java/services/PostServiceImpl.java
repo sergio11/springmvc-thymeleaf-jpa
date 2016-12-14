@@ -31,12 +31,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostSummary> findLatest5() {
-        return postRepository.findFirst5ByOrderByDateDesc();
-    }
-
-    @Override
-    public PostDetail findById(Long id) {
-        return postRepository.findById(id);
+        return postRepository.findFirst5ByPublishedTrueOrderByDateDesc();
     }
 
     @Override
@@ -64,4 +59,18 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByAuthorId(id);
     }
     
+    @Override
+    public PostDetail findById(Long id) {
+        return postRepository.findById(id);
+    }
+
+    @Override
+    public PostDetail findByIdAndPublishedTrue(Long id, String currentUser) {
+        return postRepository.findByIdAndPublishedTrueOrUserIsAuthor(id, currentUser);
+    }
+    
+    @Override
+    public PostDetail findByIdAndPublishedTrue(Long id) {
+        return postRepository.findByIdAndPublishedTrue(id);
+    }
 }

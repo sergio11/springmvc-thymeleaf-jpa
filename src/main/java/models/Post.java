@@ -2,8 +2,6 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,15 +46,20 @@ public class Post implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Date date = new Date();
+    
+    @NotNull(message="{post.published.notnull}")
+    @Column(nullable = false)
+    private Boolean published = false;
 
     public Post() {}
 
-    public Post(String title, String subtitle, String body, User author, Date date) {
+    public Post(String title, String subtitle, String body, User author, Date date, Boolean published) {
         this.title = title;
         this.subtitle = subtitle;
         this.body = body;
         this.author = author;
         this.date = date;
+        this.published = published;
     }
 
     public Long getId() {
@@ -108,6 +111,14 @@ public class Post implements Serializable {
         this.date = date;
     }
 
+    public Boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(Boolean published) {
+        this.published = published;
+    }
+    
     @Override
     public String toString() {
         return "Post{" + "id=" + id + ", title=" + title + ", subtitle=" + subtitle + ", body=" + body + ", author=" + author + ", date=" + date + '}';

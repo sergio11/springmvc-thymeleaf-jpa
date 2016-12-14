@@ -19,4 +19,5 @@ public interface PostByAuthor {
     @Value("#{target.author.fullName}")
     String getAuthorName();
     Date getDate();
+    Boolean getPublished();
 }
