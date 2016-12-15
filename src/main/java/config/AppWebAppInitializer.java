@@ -32,7 +32,7 @@ public final class AppWebAppInitializer extends AbstractAnnotationConfigDispatch
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         super.customizeRegistration(registration);
-        registration.setMultipartConfig(new MultipartConfigElement("/tmp/blog/uploads", 2097152, 4194304, 0));
+        registration.setMultipartConfig(new MultipartConfigElement("/", 2097152, 4194304, 0));
     }
     
     @Override

@@ -6,10 +6,14 @@
 package controllers.admin;
 
 import exceptions.PostNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.Valid;
+import models.FileImage;
 import models.Post;
 import models.User;
 import org.slf4j.Logger;
@@ -24,6 +28,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.PostService;
 import services.security.CurrentUser;
@@ -89,10 +95,19 @@ public class PostController {
     }
     
     @PostMapping("/save")
-    public String processPost(@ModelAttribute @Valid Post post, Errors errors, 
-            @CurrentUserAttached User activeUser, RedirectAttributes model){
+    public String processPost(@RequestPart("postImage") MultipartFile postImage, @ModelAttribute @Valid Post post, Errors errors, 
+            @CurrentUserAttached User activeUser, RedirectAttributes model) throws IOException, SQLException{
+        
         if(errors.hasErrors()){
             return "admin/post/create";
+        }
+        if(postImage != null){
+            FileImage image = new FileImage();
+            image.setName(postImage.getName());
+            image.setContentType(postImage.getContentType());
+            image.setSize(postImage.getSize());
+            image.setContent(new SerialBlob(postImage.getBytes()));
+            post.setImage(image);
         }
         post.setAuthor(activeUser);
         postService.create(post);

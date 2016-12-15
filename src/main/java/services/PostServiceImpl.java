@@ -6,6 +6,7 @@
 package services;
 
 import java.util.List;
+import models.FileImage;
 import models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import repositories.PostRepository;
 import projection.PostByAuthor;
 import projection.PostDetail;
 import projection.PostSummary;
+import repositories.FileImageRepository;
 
 /**
  *
@@ -23,6 +25,8 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private FileImageRepository fileImageRepository;
     
     @Override
     public List<Post> findAll() {
@@ -67,5 +71,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDetail findByIdAndPublishedTrue(Long id) {
         return postRepository.findByIdAndPublishedTrue(id);
+    }
+
+    @Override
+    public FileImage getImageByPostId(Long id) {
+        return fileImageRepository.findByPostId(id);
     }
 }
