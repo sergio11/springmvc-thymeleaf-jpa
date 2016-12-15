@@ -7,6 +7,7 @@ package services;
 
 import models.Post;
 import java.util.List;
+import models.FileImage;
 import projection.PostByAuthor;
 import projection.PostDetail;
 import projection.PostSummary;
@@ -25,4 +26,5 @@ public interface PostService {
     Post edit(Post post);
     void delete(Post post);
     void delete(Long id);
+    FileImage getImageByPostId(Long id);
 }

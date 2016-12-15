@@ -5,7 +5,7 @@
     </head>
     <body>
         <div layout:fragment="header">
-            <header class="intro-header" style="background-image: url('/ejercicio1m/img/about-bg.jpg')">
+            <header class="intro-header" th:style="'background-image:url(' + @{/posts/image/{postId}(postId=${post.id})} + ');'">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">

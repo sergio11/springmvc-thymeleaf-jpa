@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,18 +49,22 @@ public class Post implements Serializable {
     @Column(nullable = false)
     private Date date = new Date();
     
+    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private FileImage image;
+    
     @NotNull(message="{post.published.notnull}")
     @Column(nullable = false)
     private Boolean published = false;
 
     public Post() {}
 
-    public Post(String title, String subtitle, String body, User author, Date date, Boolean published) {
+    public Post(String title, String subtitle, String body, User author, Date date, FileImage image, Boolean published) {
         this.title = title;
         this.subtitle = subtitle;
         this.body = body;
         this.author = author;
         this.date = date;
+        this.image = image;
         this.published = published;
     }
 
@@ -110,6 +116,15 @@ public class Post implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public FileImage getImage() {
+        return image;
+    }
+
+    public void setImage(FileImage image) {
+        this.image = image;
+    }
+    
 
     public Boolean getPublished() {
         return published;

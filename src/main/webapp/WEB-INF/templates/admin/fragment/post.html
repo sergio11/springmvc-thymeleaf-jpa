@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <form th:fragment="form(target, delete)" id="postForm" name="postForm" method="post" action="#" th:action="${target}" th:object="${post}">
+        <form th:fragment="form(target, delete)" enctype="multipart/form-data" id="postForm" name="postForm" method="post" action="#" th:action="${target}" th:object="${post}">
             <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                 <ul>
                     <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
@@ -27,14 +27,26 @@
             </div>
             <div class="row control-group">
                 <div class="form-group col-xs-12">
-                    <label class="col-md-2 control-label" th:text="#{form.post.status}">Post status</label>
-                    <div class="radio radio-inline">
+                    <label th:text="#{form.post.status}">Post status</label>
+                    <div class="radio col-xs-12">
                         <label for="radio_published" th:text="#{form.post.published}">Published</label>
                         <input th:field="*{published}" type="radio" id="radio_published" name="post_status" value="true" />
                     </div>
-                    <div class="radio radio-inline">
+                    <div class="radio col-xs-12">
                         <label for="radio_not_published" th:text="#{form.post.notpublished}">Not Published</label>
                         <input th:field="*{published}" type="radio" id="radio_not_published" name="post_status" value="false" />
+                    </div>
+                </div>
+            </div>
+            <div class="row control-group">
+                <legend th:text="#{form.post.image}">Post Image</legend>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" th:text="#{form.post.image.label}">Image</label>
+                    <div class="col-md-10">
+                        <input type="file" accept="image/jpeg,image/png,image/gif" class="btn btn-default" id="image" name="postImage">
+                        <p class="help-block" th:text="#{form.post.image.help}">
+                            some help text here.
+                        </p>
                     </div>
                 </div>
             </div>
