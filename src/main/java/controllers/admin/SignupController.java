@@ -6,12 +6,14 @@
 package controllers.admin;
 
 import exceptions.UserAlredyExistsException;
+import java.util.Locale;
 import javax.validation.Valid;
 import models.Role;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -22,7 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import repositories.RolesRepository;
 import services.UserService;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author sergio
@@ -37,6 +40,8 @@ public class SignupController {
     private UserService userService;
     @Autowired
     private RolesRepository rolesRepository;
+    @Autowired
+    private ReloadableResourceBundleMessageSource messageSource;
     
     @GetMapping("/signup")
     public String showSignupForm(Model model){
@@ -52,8 +57,10 @@ public class SignupController {
                 Role role = rolesRepository.findByName("ROLE_BLOG_CONTRIBUTOR");
                 user.addRole(role);
                 userService.registerNewUserAccount(user);
-                model.addFlashAttribute("message", user);
-                viewName = "redirect:/admin";
+                List<String> successMessages = new ArrayList();
+                successMessages.add(messageSource.getMessage("message.signup.success", new Object[]{ user.getUsername() }, Locale.getDefault()));
+                model.addFlashAttribute("successFlashMessages", successMessages);
+                viewName = "redirect:/admin/login";
             }catch(UserAlredyExistsException e){
                 logger.error("Email alredy exists");
                 errors.rejectValue("email", "user.exists");

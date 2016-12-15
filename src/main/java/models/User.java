@@ -22,9 +22,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "users")
@@ -65,7 +63,7 @@ public class User implements Serializable, UserDetails {
     private String fullName;
     
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-    private Set<Post> posts = new HashSet<Post>();
+    private Set<Post> posts = new HashSet();
     
     @Column(nullable = true)
     private Date lastLoginAccess;
@@ -76,7 +74,7 @@ public class User implements Serializable, UserDetails {
       name="USER_ROLES",
       joinColumns=@JoinColumn(name="USER_ID", referencedColumnName="ID"),
       inverseJoinColumns=@JoinColumn(name="ROLE_ID", referencedColumnName="ID"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet();
 
     public User() {}
 
@@ -184,12 +182,12 @@ public class User implements Serializable, UserDetails {
 
     public void addRole(Role role){
         this.roles.add(role);
+        role.addUser(this);
     }
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String userRoles = StringUtils.collectionToCommaDelimitedString(roles);
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(userRoles);
+        return roles;
     }
 
     @Override

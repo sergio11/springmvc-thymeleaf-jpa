@@ -8,17 +8,22 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators.IntSequenceGenerator;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
  
 @Entity
 @Table(name = "roles")
 @JsonIdentityInfo(generator=IntSequenceGenerator.class, property="@id")
-public class Role implements Serializable {
+public class Role implements Serializable, GrantedAuthority  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +31,9 @@ public class Role implements Serializable {
     
     @Column(nullable = false, unique = true)
     private String name;
+    
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private Set<User> users = new HashSet();
     
     private String description;
     
@@ -64,6 +72,23 @@ public class Role implements Serializable {
         this.description = description;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+    
+    public void addUser(User user){
+        users.add(user);
+    }
+    
+    @Override
+    public String getAuthority() {
+        return name;
+    }
+    
     @Override
     public String toString() {
         return "Role{" + "id=" + id + ", name=" + name + ", description=" + description + '}';

@@ -6,15 +6,15 @@
 package services.security;
 
 import java.io.Serializable;
-import java.util.List;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import repositories.UserRepository;
-import repositories.RolesRepository;
 
 /**
  *
@@ -24,6 +24,7 @@ import repositories.RolesRepository;
 public class CustomUserDetailsService implements UserDetailsService, Serializable {
 
     private final UserRepository userRepository;
+    private static Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
 
     @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {
@@ -36,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService, Serializabl
         if (null == user) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         }
+        logger.info("Usuario obtenido: " + user.toString());
         return user;
     }
 }
