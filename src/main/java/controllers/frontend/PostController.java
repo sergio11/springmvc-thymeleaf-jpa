@@ -6,7 +6,6 @@
 package controllers.frontend;
 
 import exceptions.PostNotFoundException;
-import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import projection.PostDetail;
 import services.PostService;
-import services.security.CurrentUser;
 
 /**
  *
@@ -32,10 +30,8 @@ public class PostController {
     private PostService postService;
     
     @GetMapping("/{postId}")
-    public String show(@CurrentUser User activeUser, @PathVariable Long postId, Model model){
-        PostDetail post = activeUser != null
-                ? postService.findByIdAndPublishedTrue(postId, activeUser.getUsername())
-                : postService.findByIdAndPublishedTrue(postId);
+    public String show(@PathVariable Long postId, Model model){
+        PostDetail post = postService.findByIdAndPublishedTrue(postId);
         if (post == null) {
             throw new PostNotFoundException();
         }

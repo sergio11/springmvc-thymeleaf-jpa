@@ -20,7 +20,6 @@ public interface PostService {
     List<PostSummary> findLatest5();
     List<PostByAuthor> findPostsByAuthor(Long id);
     PostDetail findById(Long id);
-    PostDetail findByIdAndPublishedTrue(Long id, String currentUser);
     PostDetail findByIdAndPublishedTrue(Long id);
     Post create(Post post);
     Post edit(Post post);

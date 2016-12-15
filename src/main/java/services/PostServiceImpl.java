@@ -63,11 +63,6 @@ public class PostServiceImpl implements PostService {
     public PostDetail findById(Long id) {
         return postRepository.findById(id);
     }
-
-    @Override
-    public PostDetail findByIdAndPublishedTrue(Long id, String currentUser) {
-        return postRepository.findByIdAndPublishedTrueOrUserIsAuthor(id, currentUser);
-    }
     
     @Override
     public PostDetail findByIdAndPublishedTrue(Long id) {
