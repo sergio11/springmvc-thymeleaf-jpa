@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.validation.Valid;
 import models.FileImage;
 import models.Post;
@@ -101,12 +100,13 @@ public class PostController {
         if(errors.hasErrors()){
             return "admin/post/create";
         }
+        
         if(postImage != null){
             FileImage image = new FileImage();
             image.setName(postImage.getName());
             image.setContentType(postImage.getContentType());
             image.setSize(postImage.getSize());
-            image.setContent(new SerialBlob(postImage.getBytes()));
+            image.setContent(postImage.getBytes());
             post.setImage(image);
         }
         post.setAuthor(activeUser);
