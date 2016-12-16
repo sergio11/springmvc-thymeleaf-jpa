@@ -4,8 +4,8 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorator="admin/layout">
     <head>
-        <title>TODO supply a title</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-wysihtml5-0.0.2.css}"></link> 
+        <title th:text="#{admin.post.delete.title}">Delete Post</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap3-wysihtml5.min.css}"></link>  
     </head>
     <body>
         <div layout:fragment="main-content">
@@ -17,11 +17,14 @@
             </div>
         </div>
         <th:block layout:fragment="scripts">
-            <script th:src="@{/js/wysihtml5-0.3.0.min.js}"></script>
-            <script th:src="@{/js/bootstrap-wysihtml5-0.0.2.min.js}"></script>
+            <script th:src="@{/js/bootstrap3-wysihtml5.all.min.js}"></script>
             <script>
                 $(function() {
-                    $('#bootstrap-editor').wysihtml5();
+                    $('#bootstrap-editor').wysihtml5({
+                        toolbar: {
+                            "fa": true
+                        }
+                    });
                 });
             </script>
         </th:block>
