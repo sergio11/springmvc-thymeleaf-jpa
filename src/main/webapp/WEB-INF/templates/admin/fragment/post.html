@@ -26,25 +26,29 @@
                 </div>
             </div>
             <div class="row control-group">
-                <div class="form-group col-xs-12">
+                <div class="form-group">
                     <label class="col-md-2 control-label" th:text="#{form.post.status}">Post status</label>
                     <div class="col-md-10">
                         <div class="radio">
-                            <label for="radio_published" th:text="#{form.post.published}">Published</label>
-                            <input th:field="*{published}" type="radio" id="radio_published" name="post_status" value="true" />
+                            <label>
+                                <input th:field="*{published}" type="radio" id="radio_published" name="post_status" value="true" />
+                                <span th:text="#{form.post.published}">Published</span>
+                            </label>
                         </div>
                         <div class="radio">
-                            <label for="radio_not_published" th:text="#{form.post.notpublished}">Not Published</label>
-                            <input th:field="*{published}" type="radio" id="radio_not_published" name="post_status" value="false" />
+                            <label>
+                                <input th:field="*{published}" type="radio" id="radio_not_published" name="post_status" value="false" />
+                                <span th:text="#{form.post.notpublished}">Not Published</span>
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row control-group">
                 <div class="form-group">
-                    <label class="col-md-2 control-label" th:text="#{form.post.image.label}">Image</label>
-                    <div class="col-md-10">
-                        <input type="file" accept="image/jpeg,image/png,image/gif" class="btn btn-default" id="image" name="postImage">
+                    <label class="col-md-1 control-label" th:text="#{form.post.image.label}">Image</label>
+                    <div class="col-md-11">
+                        <input type="file" accept="image/jpeg,image/jpg,image/png,image/gif" class="btn btn-default" id="image" name="postImage">
                         <p class="help-block" th:text="#{form.post.image.help}">
                             some help text here.
                         </p>

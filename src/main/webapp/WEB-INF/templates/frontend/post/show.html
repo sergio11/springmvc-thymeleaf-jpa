@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html layout:decorator="frontend/layout">
     <head>
-        <title>TODO supply a title</title>
+        <title th:text="#{frontend.post.show.title(${post.title})}">TODO supply a title</title>
     </head>
     <body>
         <div layout:fragment="header">

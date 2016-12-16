@@ -34,7 +34,6 @@ import services.PostService;
 import services.security.CurrentUser;
 import services.security.CurrentUserAttached;
 import projection.PostByAuthor;
-import projection.PostDetail;
 /**
  *
  * @author sergio
@@ -60,7 +59,7 @@ public class PostController {
     
     @GetMapping("/edit/{postId}")
     public String showUpdatePostForm(@PathVariable Long postId, Model model) {
-        PostDetail post = postService.findById(postId);
+        Post post = postService.findById(postId);
         if (post == null) {
             throw new PostNotFoundException();
         }
@@ -70,7 +69,7 @@ public class PostController {
     
     @GetMapping("/delete/{postId}")
     public String showDeletePostForm(@PathVariable Long postId, Model model) {
-        PostDetail post = postService.findById(postId);
+        Post post = postService.findById(postId);
         if (post == null) {
             throw new PostNotFoundException();
         }
@@ -101,7 +100,8 @@ public class PostController {
             return "admin/post/create";
         }
         
-        if(postImage != null){
+        if(postImage != null && !postImage.isEmpty()){
+            logger.info("Añadiendo información de la imagen");
             FileImage image = new FileImage();
             image.setName(postImage.getName());
             image.setContentType(postImage.getContentType());
@@ -109,8 +109,16 @@ public class PostController {
             image.setContent(postImage.getBytes());
             post.setImage(image);
         }
+        
         post.setAuthor(activeUser);
-        postService.create(post);
+        if(post.getId() == null){
+            logger.info("Creando Nuevo Post");
+            postService.create(post);
+        }else{
+            logger.info("Editando Post");
+            postService.edit(post);
+        }
+        
         List<String> successMessages = new ArrayList();
         successMessages.add(messageSource.getMessage("message.post.save.success", new Object[] {post.getId()}, Locale.getDefault()));
         model.addFlashAttribute("successFlashMessages", successMessages);        
