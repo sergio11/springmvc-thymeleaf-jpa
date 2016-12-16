@@ -6,7 +6,6 @@
 package controllers.frontend;
 
 import exceptions.PostNotFoundException;
-import java.sql.Blob;
 import java.sql.SQLException;
 import models.FileImage;
 import org.slf4j.Logger;
@@ -50,14 +49,9 @@ public class PostController {
     public ResponseEntity<byte[]> downloadPostImage(@PathVariable Long postId) throws SQLException {
         FileImage postImage = postService.getImageByPostId(postId);
         logger.info("Post Image Information: " + postImage.toString());
-        Blob blob = postImage.getContent();
-        int blobLength = (int) blob.length();  
-        byte[] blobAsBytes = blob.getBytes(1, blobLength);
-        //release the blob and free up memory. (since JDBC 4.0)
-        blob.free();
         return ResponseEntity.ok()
             .contentLength(postImage.getSize())
             .contentType(MediaType.parseMediaType(postImage.getContentType()))
-            .body(blobAsBytes);
+            .body(postImage.getContent());
     }
 }

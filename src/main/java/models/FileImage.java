@@ -6,12 +6,12 @@
 package models;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,7 +32,8 @@ public class FileImage implements Serializable {
     @Column(nullable = true)
     private Long size;
     @Column(nullable = false)
-    private Blob content;
+    @Lob
+    private byte[] content;
     @OneToOne(mappedBy = "image")
     private Post post;
 
@@ -68,14 +69,13 @@ public class FileImage implements Serializable {
         this.size = size;
     }
 
-    public Blob getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(Blob content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
-
     
     public Post getPost() {
         return post;
