@@ -40,6 +40,18 @@
                             <hr>
                         </div>
                     </div>
+                    <div th:if="${#lists.isEmpty(latest5posts)}">
+                        <th:block sec:authorize="isAuthenticated()">
+                            <h2 th:text="#{home.not.article.user.login.subtitle(${#authentication.name})}">Welcome User!.</h2>
+                            <h3 th:text="#{home.not.article.user.login.text}">Create Post</h3>
+                            <a th:href="@{/admin/posts/create}" th:text="#{home.create.new.post}">Create a new post</a>
+                        </th:block>
+                        <th:block sec:authorize="!isAuthenticated()">
+                            <h2 th:text="#{home.not.article.user.not.login.subtitle}">Login User.</h2>
+                            <h3 th:text="#{home.not.article.user.not.login.text}">Init Session</h3>
+                            <a th:href="@{/admin/login}" th:text="#{home.login}">login user</a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
         </div>
