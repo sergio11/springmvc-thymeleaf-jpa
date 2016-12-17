@@ -125,7 +125,7 @@ public class PostController {
             image.setContent(postImage.getBytes());
             post.setImage(image);
         }
-
+        
         post.setAuthor(activeUser);
         if (post.getId() == null) {
             postService.create(post);
