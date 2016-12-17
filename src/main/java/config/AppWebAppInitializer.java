@@ -3,7 +3,7 @@ package config;
 import config.root.RootConfig;
 import config.web.WebConfig;
 import javax.servlet.MultipartConfigElement;
-import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -38,13 +38,16 @@ public final class AppWebAppInitializer extends AbstractAnnotationConfigDispatch
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
+        // set active profiles
         servletContext.setInitParameter("spring.profiles.active", "development");
-    }
-    
-    @Override
-    protected Filter[] getServletFilters() {
-        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        return new Filter[]{characterEncodingFilter};
+        // add CharacterEncodingFilter solve encode problems with Tomcat server
+        FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encoding-filter", new CharacterEncodingFilter());
+        encodingFilter.setInitParameter("encoding", "UTF-8");
+        encodingFilter.setInitParameter("forceEncoding", "true");
+        /*
+            To make sure the characterEncodingFilter is first in the chain you need to change the middle argument in addMappingForUrlPatterns to false. 
+            The value false ensures that the CharacterEncodingFilter is the first filter in the chain, the value true adds the filter to the end of the filterChain
+        */
+        encodingFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }
