@@ -28,37 +28,42 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "users")
 @FieldMatch(first = "passwordClear", second = "confirmPassword", message = "{user.pass.not.match}")
 public class User implements Serializable, UserDetails {
+    
+    /* Marker interface for grouping validations to be applied at the time of creating a (new) user. */
+    public interface UserCreation{}
+    /* Marker interface for grouping validations to be applied at the time of updating a (existing) user. */
+    public interface UserUpdate{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @NotBlank(message="{user.username.notnull}")
-    @Size(min=5, max=15, message="{user.username.size}")
+    @NotBlank(message="{user.username.notnull}", groups={ UserCreation.class, UserUpdate.class })
+    @Size(min=5, max=15, message="{user.username.size}", groups={ UserCreation.class, UserUpdate.class })
     @Column(nullable = false, length = 30, unique = true)
     private String username;
     
-    @NotBlank(message="{user.pass.notnull}")
-    @Size(min=8, max=25, message="{user.pass.size}")
+    @NotBlank(message="{user.pass.notnull}", groups={ UserCreation.class })
+    @Size(min=8, max=25, message="{user.pass.size}", groups={ UserCreation.class })
     @Transient
     private String passwordClear;
     
-    @NotBlank(message="{user.confirm.pass.notnull}")
+    @NotBlank(message="{user.confirm.pass.notnull}", groups={ UserCreation.class })
     @Transient
     private String confirmPassword;
     
     @Column(length = 60)
     private String password;
     
-    @NotBlank(message="{user.email.notnull}")
-    @Email(message="{user.email.invalid}")
+    @NotBlank(message="{user.email.notnull}", groups={ UserCreation.class, UserUpdate.class })
+    @Email(message="{user.email.invalid}", groups={ UserCreation.class, UserUpdate.class })
     @Column(nullable = false, length = 90, unique = true)
     private String email;
     
     private Boolean enabled = true;
     
-    @NotBlank(message="{user.fullname.notnull}")
-    @Size(min=8, max=25, message="{user.fullname.size}")
+    @NotBlank(message="{user.fullname.notnull}", groups={ UserCreation.class, UserUpdate.class })
+    @Size(min=8, max=25, message="{user.fullname.size}", groups={ UserCreation.class, UserUpdate.class })
     @Column(length = 100)
     private String fullName;
     
@@ -75,6 +80,7 @@ public class User implements Serializable, UserDetails {
       joinColumns=@JoinColumn(name="USER_ID", referencedColumnName="ID"),
       inverseJoinColumns=@JoinColumn(name="ROLE_ID", referencedColumnName="ID"))
     private Set<Role> roles = new HashSet();
+   
 
     public User() {}
 

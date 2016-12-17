@@ -11,5 +11,10 @@
                 <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
         </div>
+        <div th:fragment="flash-message" th:if="${not #lists.isEmpty(successFlashMessages)}" class="alert alert-success">
+            <ul>
+                <li th:each="message:${successFlashMessages}" th:text="${message}"></li>
+            </ul>
+        </div>
     </body>
 </html>

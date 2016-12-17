@@ -17,11 +17,7 @@
                                 <div th:if="${param.logout}" th:text="#{login.logged.out}" class="alert alert-success"> 
                                     You have been logged out.
                                 </div>
-                                <div th:if="${not #lists.isEmpty(successFlashMessages)}" class="alert alert-success">
-                                    <ul>
-                                        <li th:each="message:${successFlashMessages}" th:text="${message}"></li>
-                                    </ul>
-                                </div>
+                               <th:block th:replace="admin/fragment/alerts::flash-message"></th:block>
                                 <div class="social">
                                     <a class="face_login" href="#">
                                         <span class="face_icon">

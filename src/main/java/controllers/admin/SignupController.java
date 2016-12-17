@@ -26,6 +26,7 @@ import repositories.RolesRepository;
 import services.UserService;
 import java.util.List;
 import java.util.ArrayList;
+import org.springframework.validation.annotation.Validated;
 /**
  *
  * @author sergio
@@ -50,7 +51,7 @@ public class SignupController {
     }
     
     @PostMapping("/signup")
-    public String processSignup(@ModelAttribute @Valid User user, Errors errors, RedirectAttributes model){
+    public String processSignup(@Validated(User.UserCreation.class) @ModelAttribute User user, Errors errors, RedirectAttributes model){
         String viewName = "admin/signup";
         if(!errors.hasErrors()){
             try {

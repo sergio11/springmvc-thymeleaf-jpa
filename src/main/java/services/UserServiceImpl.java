@@ -23,6 +23,7 @@ import repositories.UserRepository;
  * @author sergio
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -31,7 +32,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    @Transactional
     @Override
     public void create(User user) throws UserAlredyExistsException {
         logger.debug("Registrando nuevo usuario: " + user.getUsername());
@@ -42,10 +42,9 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
     
-    @Transactional
     @Override
     public void update(User user) throws UserAlredyExistsException {
-        if (userRepository.existsUserWithEmailOrUsername(user.getEmail(), user.getUsername()) > 0){   
+        if (userRepository.existsUserWithEmailOrUsernameAndNotId(user.getEmail(), user.getUsername(), user.getId()) > 0){   
             throw new UserAlredyExistsException(user.getEmail(), user.getUsername());
         }
         userRepository.save(user);
