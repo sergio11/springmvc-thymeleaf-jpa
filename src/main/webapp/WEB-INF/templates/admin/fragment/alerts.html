@@ -8,7 +8,7 @@
     <body>
         <div th:fragment="form-errors" class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
             <ul>
-                <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+                <li class="text-left" th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
             </ul>
         </div>
         <div th:fragment="flash-message" th:if="${not #lists.isEmpty(successFlashMessages)}" class="alert alert-success">
