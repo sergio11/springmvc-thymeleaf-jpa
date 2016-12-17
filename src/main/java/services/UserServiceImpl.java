@@ -33,12 +33,21 @@ public class UserServiceImpl implements UserService {
     
     @Transactional
     @Override
-    public void registerNewUserAccount(User user) throws UserAlredyExistsException {
+    public void create(User user) throws UserAlredyExistsException {
         logger.debug("Registrando nuevo usuario: " + user.getUsername());
         if (userRepository.existsUserWithEmailOrUsername(user.getEmail(), user.getUsername()) > 0){   
             throw new UserAlredyExistsException(user.getEmail(), user.getUsername());
         }
         user.setPassword(passwordEncoder.encode(user.getPasswordClear()));
+        userRepository.save(user);
+    }
+    
+    @Transactional
+    @Override
+    public void update(User user) throws UserAlredyExistsException {
+        if (userRepository.existsUserWithEmailOrUsername(user.getEmail(), user.getUsername()) > 0){   
+            throw new UserAlredyExistsException(user.getEmail(), user.getUsername());
+        }
         userRepository.save(user);
     }
 

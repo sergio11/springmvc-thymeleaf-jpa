@@ -15,7 +15,8 @@ import java.util.Date;
  * @author sergio
  */
 public interface UserService {
-    void registerNewUserAccount(User user) throws UserAlredyExistsException;
+    void create(User user) throws UserAlredyExistsException;
+    void update(User user) throws UserAlredyExistsException;
     List<User> getAllUsers();
     void updateLastLoginAccess(String username, Date lastLoginAccess);
     User findUserByUsername(String username);

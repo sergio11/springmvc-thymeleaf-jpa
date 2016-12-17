@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="admin/layout">
+    <head>
+        <title th:text="#{admin.user.profile.title(${user.fullName})}">User Profile</title>
+    </head>
+    <body>
+        <div layout:fragment="main-content">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title text-capitalize" th:text="#{users.profile.title}">Create new Post</div>
+                </div>
+                <div class="panel-body">
+                    <form id="userProfile" name="userProfile" method="post" action="#" th:action="${target}" th:object="${user}">
+                        <th:block th:replace="admin/fragment/alerts::form-errors"></th:block>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label th:text="#{form.profile.username.label}">Username</label>
+                                <input type="text" th:field="*{username}" th:placeholder="#{form.profile.username.placeholder}" class="form-control" id="id" required />
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label th:text="#{form.profile.email.label}">email</label>
+                                <input type="email" th:field="*{email}" th:placeholder="#{form.profile.email.placeholder}" class="form-control" id="email" required />
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                <label th:text="#{form.profile.fullName.label}">full name</label>
+                                <input type="text" th:field="*{fullName}" th:placeholder="#{form.profile.fullName.placeholder}" class="form-control" id="fullName" required />
+                            </div>
+                        </div>
+                         <input type="hidden" th:field="*{id}"/>
+                        <br />
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success" th:value="#{form.profile.save}">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
