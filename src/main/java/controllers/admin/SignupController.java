@@ -56,7 +56,7 @@ public class SignupController {
             try {
                 Role role = rolesRepository.findByName("ROLE_BLOG_CONTRIBUTOR");
                 user.addRole(role);
-                userService.registerNewUserAccount(user);
+                userService.create(user);
                 List<String> successMessages = new ArrayList();
                 successMessages.add(messageSource.getMessage("message.signup.success", new Object[]{ user.getUsername() }, Locale.getDefault()));
                 model.addFlashAttribute("successFlashMessages", successMessages);

@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
                 
         http.authorizeRequests()
-                .antMatchers("/admin/users/**").hasRole("BLOG_ADMIN")
+                .regexMatchers("/admin/users/\\b(?:(?!self)\\w)+\\b").hasRole("BLOG_ADMIN")
                 .antMatchers("/admin/posts/**").hasRole("BLOG_CONTRIBUTOR")
                 .antMatchers("/admin/signup").anonymous()
                 .antMatchers("/admin/**").authenticated()

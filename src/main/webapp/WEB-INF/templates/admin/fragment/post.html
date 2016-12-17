@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
     </head>
     <body>
         <form th:fragment="form(target, delete)" enctype="multipart/form-data" id="postForm" name="postForm" method="post" action="#" th:action="${target}" th:object="${post}">
-            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                <ul>
-                    <li th:each="err: ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-                </ul>
-            </div>
+            <th:block th:replace="admin/fragment/alerts::form-errors"></th:block>
             <div class="row control-group">
                 <div class="form-group col-xs-12 floating-label-form-group controls">
                     <label th:text="#{form.post.title.label}">Title</label>
