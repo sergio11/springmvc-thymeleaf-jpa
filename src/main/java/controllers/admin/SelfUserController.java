@@ -57,7 +57,6 @@ public class SelfUserController {
     @RequestMapping(method = RequestMethod.GET)
     public String self(@CurrentUser User user, Model model) {
 
-        /* if "fresh" GET (ie, not redirect w validation errors): */
         if(!model.containsAttribute(BINDING_RESULT_NAME)) {
             model.addAttribute(ATTRIBUTE_NAME, user);
         }
