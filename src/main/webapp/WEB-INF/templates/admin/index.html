@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html layout:decorator="admin/layout">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="admin/layout">
     <head>
         <title th:text="#{admin.home.title}">Admin</title>
     </head>
     <body>
-        <div layout:fragment="content">
-            <h1>Welcome to Admin</h1>
+        <div layout:fragment="main-content">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title text-capitalize" th:text="#{admin.home.title(${#authentication.name})}">Welcome to Admin User!</div>
+                </div>
+                <div class="panel-body">
+                    <p th:text="#{admin.home.posts}">Post Section</p>
+                    <p sec:authorize="hasRole('BLOG_ADMIN')" th:text="#{admin.home.users}">Users Section</p>
+                </div>
+            </div>
         </div>
     </body>
 </html>
