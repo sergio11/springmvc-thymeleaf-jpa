@@ -39,8 +39,7 @@ public class SignupController {
     
     @Autowired
     private UserService userService;
-    @Autowired
-    private RolesRepository rolesRepository;
+
     @Autowired
     private ReloadableResourceBundleMessageSource messageSource;
     
@@ -55,8 +54,6 @@ public class SignupController {
         String viewName = "admin/signup";
         if(!errors.hasErrors()){
             try {
-                Role role = rolesRepository.findByName("ROLE_BLOG_CONTRIBUTOR");
-                user.addRole(role);
                 userService.create(user);
                 List<String> successMessages = new ArrayList();
                 successMessages.add(messageSource.getMessage("message.signup.success", new Object[]{ user.getUsername() }, Locale.getDefault()));

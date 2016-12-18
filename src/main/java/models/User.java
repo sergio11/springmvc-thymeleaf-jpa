@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -33,6 +35,8 @@ public class User implements Serializable, UserDetails {
     public interface UserCreation{}
     /* Marker interface for grouping validations to be applied at the time of updating a (existing) user. */
     public interface UserUpdate{}
+    /* Marker interface for grouping validations to be applied at the time of updating a user status by administrator. */
+    public interface UserStatusUpdate{}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +64,7 @@ public class User implements Serializable, UserDetails {
     @Column(nullable = false, length = 90, unique = true)
     private String email;
     
+    @NotNull(message="{user.enabled.notnull}", groups={ UserStatusUpdate.class })
     private Boolean enabled = true;
     
     @NotBlank(message="{user.fullname.notnull}", groups={ UserCreation.class, UserUpdate.class })
@@ -74,7 +79,7 @@ public class User implements Serializable, UserDetails {
     private Date lastLoginAccess;
     
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade= { CascadeType.MERGE, CascadeType.REMOVE })
     @JoinTable(
       name="USER_ROLES",
       joinColumns=@JoinColumn(name="USER_ID", referencedColumnName="ID"),
@@ -84,14 +89,11 @@ public class User implements Serializable, UserDetails {
 
     public User() {}
 
-    public User(User user) {
-        this.id = user.id;
-        this.username = user.username;
-        this.passwordClear = user.passwordClear;
-        this.confirmPassword = user.confirmPassword;
-        this.password = user.password;
-        this.email = user.email;
-        this.fullName = user.fullName;
+    public User(String username, String email, String fullName, Date lastLoginAccess) {
+        this.username = username;
+        this.email = email;
+        this.fullName = fullName;
+        this.lastLoginAccess = lastLoginAccess;
     }
     
     public Long getId() {
@@ -188,7 +190,6 @@ public class User implements Serializable, UserDetails {
 
     public void addRole(Role role){
         this.roles.add(role);
-        role.addUser(this);
     }
     
     @Override
@@ -213,13 +214,11 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", passwordClear=" + passwordClear + ", confirmPassword=" + confirmPassword + ", password=" + password + ", email=" + email + ", enabled=" + enabled + ", fullName=" + fullName + ", posts=" + posts + ", lastLoginAccess=" + lastLoginAccess + ", roles=" + roles + '}';
     }
-    
-    
 }

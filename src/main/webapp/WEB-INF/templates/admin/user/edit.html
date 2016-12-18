@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="admin/layout">
+    <head>
+        <title th:text="#{admin.user.edit.title}">Edit User</title>
+    </head>
+    <body>
+        <div layout:fragment="main-content">
+            <div class="content-box-large">
+                <div class="panel-heading">
+                    <div class="panel-title text-capitalize" th:text="#{form.user.edit.title}">Editar Usuario</div>
+                </div>
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" id="editUser" name="editUser" method="post" action="#" th:action="@{/admin/users/edit/{userId}(userId=${user.id})}" th:object="${user}">
+                        <th:block th:replace="admin/fragment/alerts::form-errors"></th:block>
+                        <th:block th:replace="admin/fragment/alerts::flash-message"></th:block>
+                        <div class="row control-group">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" th:text="#{form.user.roles}">User Roles</label>
+                                <div class="col-md-10">
+                                    <div class="checkbox" th:each="r:${roles}">
+                                        <label>
+                                            <input type="checkbox" th:field="*{roles}" th:value="${r.id}">
+                                            <span th:text="${r.name}"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row control-group">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" th:text="#{form.user.status}">User Status</label>
+                                <div class="col-md-10">
+                                    <div class="radio">
+                                        <label>
+                                            <input th:field="*{enabled}" type="radio" id="radio_enabled" name="user_enabled" value="true" />
+                                            <span th:text="#{form.user.status.enabled}">Enabled</span>
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input th:field="*{enabled}" type="radio" id="radio_not_enabled" name="user_not_enabled" value="false" />
+                                            <span th:text="#{form.user.status.disabled}">Not Enabled</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                                <button type="submit" class="btn btn-success" th:value="#{form.user.save}">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

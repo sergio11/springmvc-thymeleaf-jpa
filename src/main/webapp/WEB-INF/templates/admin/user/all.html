@@ -23,6 +23,7 @@
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.status}">Status</th>
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.posts}">Artículos</th>
                                 <th class="text-uppercase text-center" th:text="#{users.all.th.lastLoginAccess}">Last Login Access</th>
+                                <th class="text-uppercase text-center" th:text="#{users.all.th.actions}">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,9 +40,12 @@
                                     <span th:if="${u.posts.isEmpty()}" class="label label-danger">Not Posts</span>
                                 </td>
                                 <td th:text="${u.lastLoginAccess}" class="text-center">Last Login Access</td>
+                                <td class="text-center">
+                                    <a href="#" th:href="@{/admin/users/edit/{userId}(userId=${u.id})}" class="btn btn-xs btn-success"><span class="fa fa-edit"></span></a>
+                                </td>
                             </tr>
                             <tr class="warning" th:if="${#lists.isEmpty(users)}">
-                                <td colspan="6" class="text-center" th:text="#{users.all.not.found}">No Users found</td>
+                                <td colspan="7" class="text-center" th:text="#{users.all.not.found}">No Users found</td>
                             </tr>
                         </tbody>
                     </table>

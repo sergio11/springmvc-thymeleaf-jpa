@@ -20,4 +20,5 @@ public interface UserService {
     List<User> getAllUsers();
     void updateLastLoginAccess(String username, Date lastLoginAccess);
     User findUserByUsername(String username);
+    User findById(Long id);
 }
