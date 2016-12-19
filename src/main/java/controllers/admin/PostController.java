@@ -109,6 +109,10 @@ public class PostController {
             RedirectAttributes model) throws IOException, SQLException{
         
         String url = "redirect:/admin/posts/all";
+        
+        if(post.getImage() == null && postImage != null && postImage.isEmpty()){
+            bindingResult.rejectValue("image", "post.image.notnull");
+        }
 
         if (bindingResult.hasErrors()) {
             model.addFlashAttribute(BINDING_RESULT_NAME, bindingResult);

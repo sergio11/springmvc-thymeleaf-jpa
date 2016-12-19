@@ -49,6 +49,7 @@ public class Post implements Serializable {
     @Column(nullable = false)
     private Date date = new Date();
     
+    @NotNull(message="{post.image.notnull}")
     @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private FileImage image;
     
