@@ -10,10 +10,10 @@ Spring MVC + Thymeleaf , Spring Security, Spring ORM + Spring Data JPA proyect
 + Apache Tomcat 9.
 
 
-![Spring MVC Thymeleaf JPA](screenshots/imagen_1.PNG "Image 1")
-![Spring MVC Thymeleaf JPA](screenshots/imagen_2.PNG "Image 2")
-![Spring MVC Thymeleaf JPA](screenshots/imagen_3.PNG "Image 3")
-![Spring MVC Thymeleaf JPA](screenshots/imagen_4.PNG "Image 4")
+![Spring MVC Thymeleaf JPA](screenshots/image_1.PNG "Image 1")
+![Spring MVC Thymeleaf JPA](screenshots/image_2.PNG "Image 2")
+![Spring MVC Thymeleaf JPA](screenshots/image_3.PNG "Image 3")
+![Spring MVC Thymeleaf JPA](screenshots/image_4.PNG "Image 4")
 
 
 
