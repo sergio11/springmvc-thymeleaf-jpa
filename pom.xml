@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.slf4j-version>1.7.5</org.slf4j-version>
-        <spring.security>4.2.0.RELEASE</spring.security>
+        <spring.security>5.3.4.RELEASE</spring.security>
         <flash.messages>1.0.2</flash.messages>
     </properties>
 
