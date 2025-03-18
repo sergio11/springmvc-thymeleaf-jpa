@@ -1,0 +1,34 @@
+[ 
+    {
+        "_class": "models.Role",
+        "@id": 1,
+        "name": "ROLE_BLOG_ADMIN",
+        "description": "Rol de los administradores del blog"
+    },
+    {
+        "_class": "models.Role",
+        "@id": 2,
+        "name": "ROLE_BLOG_CONTRIBUTOR",
+        "description": "Rol de los editores de artículos"
+    },
+    { 
+        "_class": "models.User",
+        "username": "sergio11",
+        "passwordClear": "dreamsoftware00",
+        "confirmPassword": "dreamsoftware00",
+        "password": "$2a$10$0eCQpFRdw8i6jJzjj/asdasdsadasdasdasd678d6as87d6as8dasd",
+        "email": "sergio@email.com",
+        "fullName": "Sergio Sánchez Sánchez",
+        "roles": [1, 2]
+    },
+    {
+        "_class": "models.User",
+        "username": "test33",
+        "passwordClear": "dreamsoftware00",
+        "confirmPassword": "dreamsoftware00",
+        "password": "$2a$10$0eCQpFRdw8i6jJzjj/asdasdsadasdasdasd678d6as87d6as8dasd",
+        "email": "test33@email.com",
+        "fullName": "User Test 33",
+        "roles": [2]
+    }
+]
